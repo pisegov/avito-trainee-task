@@ -1,0 +1,73 @@
+[versions]
+agp = "8.3.1"
+kotlin = "1.9.10"
+coreKtx = "1.12.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+activity = "1.8.2"
+constraintlayout = "2.1.4"
+jetbrainsKotlinJvm = "1.9.0"
+coroutines = "1.7.3"
+annotation = "1.7.1"
+lifecycle-runtime = "2.7.0"
+room = "2.6.1"
+epoxy = "5.1.4"
+dagger = "2.51"
+jakartaInject = "2.0.1"
+ksp = "1.9.23-1.0.19"
+retrofit = "2.10.0"
+retrofitAdaptersResult = "1.0.9"
+kotlinxSerialization = "1.6.3"
+kotlinxSerializationPlugin = "1.9.22"
+coil = "2.6.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime" }
+
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+
+airbnb-epoxy = { group = "com.airbnb.android", name = "epoxy", version.ref = "epoxy" }
+airbnb-epoxy-processor = { group = "com.airbnb.android", name = "epoxy-processor", version.ref = "epoxy" }
+
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+jakarta-inject-api = { module = "jakarta.inject:jakarta.inject-api", version.ref = "jakartaInject" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-converter = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+retrofit-adapters-result = { group = "com.github.skydoves", name = "retrofit-adapters-result", version.ref = "retrofitAdaptersResult" }
+
+androidx-room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
+
+[bundles]
+room = ["androidx-room", "androidx-room-ktx"]
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationPlugin" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }

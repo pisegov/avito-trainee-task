@@ -6,6 +6,7 @@ import com.myaxa.movies.database.dao.MoviesDao
 import com.myaxa.movies.database.models.MovieDBO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.withContext
 
 fun MoviesLocalDataSource(applicationContext: Context): MoviesLocalDataSource {
@@ -21,7 +22,11 @@ class MoviesLocalDataSource internal constructor(
     private val dao: MoviesDao,
 ) {
     fun getAll(): Flow<List<MovieDBO>> {
-        return dao.getAll()
+        return dao.getAll().distinctUntilChanged()
+    }
+
+    fun getMoviesWithId(ids: List<Long>): Flow<List<MovieDBO>> {
+        return dao.getMoviesWithId(ids).distinctUntilChanged()
     }
 
     suspend fun insertList(movies: List<MovieDBO>) = withContext(Dispatchers.IO) {

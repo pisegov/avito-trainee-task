@@ -1,6 +1,6 @@
 package com.myaxa.movies_catalog.di
 
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.ui.MoviesEpoxyController
 import dagger.BindsInstance
@@ -18,11 +18,14 @@ internal interface MoviesCatalogComponent {
     interface Factory {
         fun create(
             dependencies: MoviesCatalogDependencies,
+            @BindsInstance fragment: Fragment,
             @BindsInstance viewModel: MoviesCatalogViewModel,
         ): MoviesCatalogComponent
     }
 
    val moviesEpoxyController: MoviesEpoxyController
+   val fragment: Fragment
+   val viewModel: MoviesCatalogViewModel
 }
 
 @Module

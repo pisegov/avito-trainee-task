@@ -13,6 +13,12 @@ internal interface MoviesDao {
     @Query("select * from movies")
     fun getAll(): Flow<List<MovieDBO>>
 
+    @Query("select * from movies where id in (:ids)")
+    fun getMoviesWithId(ids: List<Long>): Flow<List<MovieDBO>>
+
+    @Query("SELECT * FROM movies WHERE :ids IS NULL OR :ids = '' OR id IN (:ids)")
+    fun getEntitiesByIds(ids: List<Int>?): Flow<List<MovieDBO>>
+
     @Upsert
     fun insertList(moves: List<MovieDBO>)
 

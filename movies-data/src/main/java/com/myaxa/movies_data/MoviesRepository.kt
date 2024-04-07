@@ -3,23 +3,34 @@ package com.myaxa.movies_data
 import com.myaxa.movies.database.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
 import jakarta.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class MoviesRepository @Inject constructor(
     private val localDataSource: MoviesLocalDataSource,
     private val remoteDataSource: MoviesRemoteDataSource,
 ) {
-
+    private val networkMovieIds = MutableStateFlow<List<Long>>(emptyList())
     private val networkErrorFlow: MutableSharedFlow<LoadingState> = MutableStateFlow(LoadingState.Started)
 
-    private val localMoviesCatalog = localDataSource.getAll().map { list ->
-        return@map when {
-            list.isEmpty() -> LoadingState.NoData
-            else -> LoadingState.Success(list.map { it.toMovie() })
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val localMoviesCatalog = networkMovieIds
+        .flatMapLatest {
+            if (it.isEmpty()) {
+                localDataSource.getAll()
+            } else {
+                localDataSource.getMoviesWithId(it)
+            }
+        }
+        .map { list ->
+            when {
+                list.isEmpty() -> LoadingState.NoData
+                else -> LoadingState.Success(list.map { it.toMovie() })
         }
     }
 
@@ -33,12 +44,15 @@ class MoviesRepository @Inject constructor(
         }
     }
 
-    suspend fun loadMoviesCatalog() {
-        val fromRemote = remoteDataSource.getAll()
+    suspend fun loadMoviesCatalog(query: String = "") {
+        val fromRemote = remoteDataSource.getMovies(query)
         when {
-            fromRemote.isFailure -> networkErrorFlow.emit(LoadingState.NetworkError)
+            fromRemote.isFailure -> {
+                networkErrorFlow.emit(LoadingState.NetworkError)
+            }
             fromRemote.isSuccess -> {
                 val list = fromRemote.getOrNull()?.docs ?: emptyList()
+                networkMovieIds.emit(list.map { it.id })
                 localDataSource.insertList(list.map { it.toMovieDBO() })
             }
         }

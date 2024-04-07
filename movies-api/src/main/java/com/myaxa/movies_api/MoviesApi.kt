@@ -12,14 +12,16 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal interface MoviesApi {
-    @GET("movie")
-    suspend fun all(
+    @GET("movie/search")
+    suspend fun search(
+        @Query(value = "query") query: String = "",
         @Query(value = "page") @IntRange(from = 1) page: Int = 1,
         @Query(value = "limit") @IntRange(from = 1, to = 20) limit: Int = 10,
     ): Result<ResponseDTO>
 
-    @GET("movie/search")
-    suspend fun search(
+    @GET("movie")
+    suspend fun filter(
+        @Query(value = "id") ids: List<Long> = emptyList(),
         @Query(value = "page") @IntRange(from = 1) page: Int = 1,
         @Query(value = "query") query: String = "",
     )

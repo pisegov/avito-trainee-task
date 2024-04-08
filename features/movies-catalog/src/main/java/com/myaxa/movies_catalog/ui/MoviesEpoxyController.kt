@@ -1,21 +1,16 @@
 package com.myaxa.movies_catalog.ui
 
-import com.airbnb.epoxy.EpoxyController
+import com.airbnb.epoxy.EpoxyModel
+import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.models.MovieInCatalog
 import javax.inject.Inject
 
-class MoviesEpoxyController @Inject constructor(private val viewModel: MoviesCatalogViewModel) : EpoxyController() {
-
-    var movies: List<MovieInCatalog> = emptyList()
-        set(value) {
-            field = value
-            requestModelBuild()
-        }
-
-    override fun buildModels() {
-        movies.forEach { model ->
-            MovieEpoxyModel("movie_${model.id}", model, viewModel::onMovieClicked).addTo(this)
-        }
+class MoviesEpoxyController @Inject constructor(private val viewModel: MoviesCatalogViewModel) : PagingDataEpoxyController<MovieInCatalog>() {
+    override fun buildItemModel(currentPosition: Int, item: MovieInCatalog?): EpoxyModel<*> {
+        return MovieEpoxyModel(
+            item!!,
+            viewModel::onMovieClicked
+        ).id("movie_${item.id}")
     }
 }

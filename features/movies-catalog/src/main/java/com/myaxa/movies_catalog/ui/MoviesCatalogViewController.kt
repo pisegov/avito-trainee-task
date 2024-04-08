@@ -1,13 +1,15 @@
 package com.myaxa.movies_catalog.ui
 
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.myaxa.movies.common.setOnTextChangeListener
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
-import com.myaxa.movies_catalog.ScreenState
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,28 +45,21 @@ class MoviesCatalogViewController @Inject constructor(
         }
     }
 
-    fun setupObservers() {
+    fun setupObservers(binding: FragmentMoviesCatalogBinding) {
         lifecycleScope.launch {
-            viewModel.state.collect {
-                when (it) {
-                    is ScreenState.Success -> {
-                        catalogEpoxyController.movies = it.movies
-                    }
+            viewModel.catalogFlow.collectLatest {
+                catalogEpoxyController.submitData(it)
+            }
+        }
 
-                    ScreenState.Loading -> {
-                        Toast.makeText(fragment.requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
-                    }
+        lifecycleScope.launch {
+            catalogEpoxyController.loadStateFlow.collect {
+                val isDataEmpty = catalogEpoxyController.adapter.itemCount == 0
+                    && (it.refresh != LoadState.Loading)
+                binding.noDataText.isVisible = isDataEmpty
 
-                    ScreenState.NetworkError -> {
-                        Toast.makeText(fragment.requireContext(), "NetworkError", Toast.LENGTH_SHORT).show()
-                    }
-
-                    ScreenState.NoDataError -> {
-                        Toast.makeText(fragment.requireContext(), "There is no data in database", Toast.LENGTH_SHORT).show()
-                    }
-
-                    ScreenState.None -> {}
-                }
+                binding.recycler.isVisible = it.refresh != LoadState.Loading
+                binding.progress.isVisible = it.refresh == LoadState.Loading
             }
         }
 

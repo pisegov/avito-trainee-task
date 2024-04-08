@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -33,7 +34,9 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.jakarta.inject.api)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.androidx.paging)
 
     implementation(project(":database"))
     implementation(project(":movies-api"))

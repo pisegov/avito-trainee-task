@@ -52,6 +52,6 @@ class MoviesCatalogFragment : Fragment(R.layout.fragment_movies_catalog) {
 
         viewController.setupViews(binding)
 
-        viewController.setupObservers()
+        viewController.setupObservers(binding)
     }
 }

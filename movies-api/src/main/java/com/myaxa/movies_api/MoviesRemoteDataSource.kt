@@ -9,8 +9,12 @@ import retrofit2.create
 class MoviesRemoteDataSource @Inject internal constructor(
     private val moviesApi: MoviesApi,
 ) {
-    suspend fun getMovies(query: String): Result<ResponseDTO> = withContext(Dispatchers.IO) {
-        moviesApi.search(query)
+    suspend fun getMovies(
+        query: String,
+        page: Int,
+        pageSize: Int,
+    ): Result<ResponseDTO> = withContext(Dispatchers.IO) {
+        moviesApi.search(query, page, pageSize)
     }
 }
 

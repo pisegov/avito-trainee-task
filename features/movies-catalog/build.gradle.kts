@@ -43,8 +43,10 @@ dependencies {
     implementation(libs.viewbindingpropertydelegate)
     implementation(libs.androidx.lifecycle.viewmodel)
 
+    implementation(libs.androidx.paging)
     implementation(libs.airbnb.epoxy)
     kapt(libs.airbnb.epoxy.processor)
+    implementation(libs.airbnb.epoxy.paging)
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)

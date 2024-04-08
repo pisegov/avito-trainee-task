@@ -6,22 +6,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
-
-    <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/searchbar_scrolling_view_behavior">
-
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
             android:padding="16dp"
             tools:listitem="@layout/item_movie" />
-    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:indeterminateProgressStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/no_data_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="16dp"
+        android:text="Could not load the data :("
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:visibility="gone" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

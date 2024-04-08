@@ -2,7 +2,6 @@ package com.myaxa.movies.database
 
 import android.content.Context
 import androidx.room.Room
-import com.myaxa.movies.database.dao.MoviesDao
 import com.myaxa.movies.database.models.MovieDBO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,12 +14,14 @@ fun MoviesLocalDataSource(applicationContext: Context): MoviesLocalDataSource {
         MoviesDatabase::class.java,
         "movies"
     ).build()
-    return MoviesLocalDataSource(roomDb.moviesDao())
+    return MoviesLocalDataSource(roomDb)
 }
 
 class MoviesLocalDataSource internal constructor(
-    private val dao: MoviesDao,
+    private val database: MoviesDatabase,
 ) {
+    private val dao
+        get() = database.dao
     fun getAll(): Flow<List<MovieDBO>> {
         return dao.getAll().distinctUntilChanged()
     }

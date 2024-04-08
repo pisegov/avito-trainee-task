@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.paging)
 
     implementation(libs.jakarta.inject.api)
     implementation(libs.dagger)

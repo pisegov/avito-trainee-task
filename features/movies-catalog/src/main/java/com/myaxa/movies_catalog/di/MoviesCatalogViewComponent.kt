@@ -1,7 +1,8 @@
 package com.myaxa.movies_catalog.di
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.myaxa.movie.details.api.MovieDetailsApi
+import com.myaxa.movies.common.Navigator
 import com.myaxa.movies_catalog.ui.MoviesCatalogViewController
 import dagger.BindsInstance
 import dagger.Component
@@ -19,6 +20,8 @@ internal interface MoviesCatalogViewComponent {
         fun create(
             moviesCatalogComponent: MoviesCatalogComponent,
             @BindsInstance lifecycleScope: LifecycleCoroutineScope,
+            @BindsInstance navigator: Navigator,
+            @BindsInstance movieDetailsApi: MovieDetailsApi,
         ): MoviesCatalogViewComponent
     }
 

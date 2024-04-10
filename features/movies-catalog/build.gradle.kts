@@ -58,5 +58,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":movies-data"))
+    implementation(project(":features:movie-details-api"))
     implementation(project(":common"))
 }

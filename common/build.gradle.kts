@@ -34,10 +34,13 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
 
     implementation(libs.androidx.viewbinding)
 
     implementation(libs.airbnb.epoxy)
     kapt(libs.airbnb.epoxy.processor)
+
+    implementation(libs.jakarta.inject.api)
 }

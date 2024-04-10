@@ -21,7 +21,7 @@ internal class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.containerView, MoviesCatalogFragment::class.java, null)
+                .add(R.id.main, MoviesCatalogFragment::class.java, null)
                 .commit()
         }
     }

@@ -1,6 +1,5 @@
 package com.myaxa.movies_catalog.ui
 
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -10,6 +9,8 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.search.SearchBar
 import com.google.android.material.search.SearchView
+import com.myaxa.movie.details.api.MovieDetailsApi
+import com.myaxa.movies.common.Navigator
 import com.myaxa.movies.common.setOnTextChangeListener
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
@@ -21,11 +22,18 @@ import javax.inject.Inject
 
 class MoviesCatalogViewController @Inject constructor(
     private val fragment: Fragment,
-    private val catalogEpoxyController: MoviesEpoxyController,
+    catalogEpoxyControllerFactory: MoviesEpoxyController.Factory,
     private val filtersEpoxyController: ChosenFiltersEpoxyController,
     private val viewModel: MoviesCatalogViewModel,
     private val lifecycleScope: LifecycleCoroutineScope,
+    private val movieDetailsApi: MovieDetailsApi,
+    private val navigator: Navigator,
 ) {
+
+    private val catalogEpoxyController: MoviesEpoxyController = catalogEpoxyControllerFactory.create {
+        navigator.navigateToFragment(fragment.parentFragmentManager, movieDetailsApi.provideMovieDetails(it))
+    }
+
     fun setupViews(binding: FragmentMoviesCatalogBinding) = with(binding) {
 
         setupCatalog(catalog)
@@ -51,19 +59,11 @@ class MoviesCatalogViewController @Inject constructor(
         lifecycleScope.launch {
             catalogEpoxyController.loadStateFlow.collect {
                 val isDataEmpty = catalogEpoxyController.adapter.itemCount == 0
-                    && (it.refresh != LoadState.Loading)
+                val isNothingLoaded = isDataEmpty && (it.refresh != LoadState.Loading)
 
-                binding.noDataText.isVisible = isDataEmpty
-                binding.catalog.isVisible = it.refresh != LoadState.Loading
+                binding.noDataText.isVisible = isNothingLoaded
+                binding.catalog.isVisible = !isDataEmpty
                 binding.progress.isVisible = it.refresh == LoadState.Loading
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.navigateToDetails.collect {
-                it?.let {
-                    Toast.makeText(fragment.requireContext(), "Navigate to movie $it", Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }

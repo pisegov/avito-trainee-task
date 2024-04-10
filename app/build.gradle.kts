@@ -61,7 +61,12 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":movies-api"))
     implementation(project(":movies-data"))
+    implementation(project(":common"))
     implementation(project(":features:movies-catalog"))
+    implementation(project(":features:movie-details-api"))
+    implementation(project(":features:movie-details-impl"))
+    implementation(project(":domain:movie-details"))
+    implementation(project(":data:movie-details"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

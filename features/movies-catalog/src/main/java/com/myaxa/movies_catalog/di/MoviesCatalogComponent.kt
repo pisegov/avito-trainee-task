@@ -21,7 +21,6 @@ internal interface MoviesCatalogComponent {
         ): MoviesCatalogComponent
     }
 
-   val moviesEpoxyController: MoviesEpoxyController
    val fragment: Fragment
    val viewModel: MoviesCatalogViewModel
 }

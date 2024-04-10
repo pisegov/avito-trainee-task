@@ -8,12 +8,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.myaxa.movie.details.api.MovieDetailsApiProvider
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
 import com.myaxa.movies_catalog.di.DaggerMoviesCatalogComponent
 import com.myaxa.movies_catalog.di.DaggerMoviesCatalogViewComponent
 import com.myaxa.movies_catalog.di.MoviesCatalogComponent
+import com.myaxa.movies_catalog.di.MoviesCatalogDependencies
 import com.myaxa.movies_catalog.di.MoviesCatalogDependenciesProvider
 import com.myaxa.movies_catalog.di.MoviesCatalogViewComponent
 
@@ -25,12 +27,11 @@ class MoviesCatalogFragment : Fragment(R.layout.fragment_movies_catalog) {
     private lateinit var viewComponent: MoviesCatalogViewComponent
     private lateinit var viewController: MoviesCatalogViewController
 
-    private val viewModelFactory: ViewModelProvider.Factory
+    private val dependencies: MoviesCatalogDependencies
         get() = (requireActivity().applicationContext as MoviesCatalogDependenciesProvider)
             .provideDependencies()
-            .viewModelFactory
 
-    private val viewModel: MoviesCatalogViewModel by viewModels { viewModelFactory }
+    private val viewModel: MoviesCatalogViewModel by viewModels { dependencies.viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,6 +48,8 @@ class MoviesCatalogFragment : Fragment(R.layout.fragment_movies_catalog) {
         viewComponent = DaggerMoviesCatalogViewComponent.factory().create(
             moviesCatalogComponent = component,
             lifecycleScope = lifecycleScope,
+            navigator = dependencies.navigator,
+            movieDetailsApi = (requireActivity().applicationContext as MovieDetailsApiProvider).provideMovieDetailsApi(),
         )
 
         viewController = viewComponent.viewController

@@ -11,16 +11,22 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.reflect.KClass
 
-internal class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) :
+internal class ViewModelFactory @Inject constructor(
+    private val viewModelFactories: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+) :
     ViewModelProvider.Factory {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        viewModels[modelClass]?.get() as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T  {
+        return viewModelFactories.getValue(modelClass as Class<ViewModel>).get() as T
+    }
+
+    val viewModelClasses get() = viewModelFactories.keys
 }
 
 @Module
 internal interface ViewModelModule {
     @Binds
+    @ApplicationScope
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds

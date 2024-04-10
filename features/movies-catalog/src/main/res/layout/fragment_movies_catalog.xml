@@ -7,11 +7,11 @@
     android:layout_height="match_parent">
 
         <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/recycler"
+            android:id="@+id/catalog"
             android:layout_width="match_parent"
+            android:paddingHorizontal="16dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:padding="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/item_movie" />
 
     <ProgressBar
@@ -27,13 +27,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
         android:text="Could not load the data :("
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:visibility="gone" />
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -42,6 +44,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="\@string/searchbar_hint" />
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/filters"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="@android:color/transparent"
+            app:itemSpacing="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:itemCount="3"
+            app:layout_scrollFlags="scroll|enterAlways"
+            tools:listitem="@layout/item_selected_filter_card" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
@@ -52,4 +69,13 @@
         app:layout_anchor="@id/search_bar">
         <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
     </com.google.android.material.search.SearchView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="32dp"
+        android:contentDescription="filters"
+        android:src="@drawable/ic_filter_list_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

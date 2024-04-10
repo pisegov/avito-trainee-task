@@ -9,7 +9,6 @@ import dagger.Module
 import javax.inject.Scope
 
 @Component(
-    dependencies = [MoviesCatalogDependencies::class],
     modules = [MoviesCatalogModule::class]
 )
 @MoviesCatalogScope
@@ -17,7 +16,6 @@ internal interface MoviesCatalogComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            dependencies: MoviesCatalogDependencies,
             @BindsInstance fragment: Fragment,
             @BindsInstance viewModel: MoviesCatalogViewModel,
         ): MoviesCatalogComponent

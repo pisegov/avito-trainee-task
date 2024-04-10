@@ -17,4 +17,5 @@ dependencies {
     implementation(libs.androidx.annotation)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.jakarta.inject.api)
+    implementation(libs.okhttp.logging.interceptor)
 }

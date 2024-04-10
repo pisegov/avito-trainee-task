@@ -3,7 +3,7 @@ package com.myaxa.domain.movie_details
 import kotlinx.coroutines.flow.Flow
 
 interface MovieDetailsRepository {
-    val movieDetailsFlow: Flow<MovieDetails>
+    fun getMovieDetailsFlow(id: Long): Flow<MovieDetails?>
 
-    suspend fun loadMovieDetails()
+    suspend fun loadMovieDetails(id: Long)
 }

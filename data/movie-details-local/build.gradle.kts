@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.myaxa.data.movie_details"
+    namespace = "com.myaxa.movie_details_local"
     compileSdk = 34
 
     defaultConfig {
@@ -34,9 +35,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.jakarta.inject.api)
 
-    implementation(project(":domain:movie-details"))
+    implementation(libs.bundles.room)
+    ksp(libs.androidx.room.compiler)
+    implementation(project(":database"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

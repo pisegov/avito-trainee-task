@@ -9,5 +9,5 @@ interface MoviesCatalogDependencies {
 }
 
 interface MoviesCatalogDependenciesProvider {
-    fun provideDependencies(): MoviesCatalogDependencies
+    fun provideMovieCatalogDependencies(): MoviesCatalogDependencies
 }

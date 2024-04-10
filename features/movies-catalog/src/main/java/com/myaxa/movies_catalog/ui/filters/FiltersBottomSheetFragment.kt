@@ -24,7 +24,7 @@ class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val viewModelFactory
         get() = (requireActivity().application as MoviesCatalogDependenciesProvider)
-            .provideDependencies()
+            .provideMovieCatalogDependencies()
             .viewModelFactory
 
     private val viewModel by viewModels<MoviesCatalogViewModel>(

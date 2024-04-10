@@ -20,13 +20,20 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Avito-kinopoisk-test"
+
 include(":app")
+include(":common")
+
+include(":features:movies-catalog")
+include(":features:movie-details-api")
+include(":features:movie-details-impl")
+
+include(":domain:movie-details")
+
+include(":movies-data")
+include(":data:movie-details-data")
+include(":data:movie-details-remote")
 include(":movies-api")
 include(":database")
-include(":features:movies-catalog")
-include(":movies-data")
-include(":common")
-include(":features:movie-details-impl")
-include(":features:movie-details-api")
-include(":domain:movie-details")
-include(":data:movie-details")
+include(":data:network")
+include(":data:movie-details-local")

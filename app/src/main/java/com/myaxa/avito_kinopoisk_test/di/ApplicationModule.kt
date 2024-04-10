@@ -5,9 +5,13 @@ import com.myaxa.avito_kinopoisk_test.BuildConfig
 import com.myaxa.movies.common.Navigator
 import com.myaxa.avito_kinopoisk_test.R
 import com.myaxa.data.movie_details.MovieDetailsRepositoryImpl
+import com.myaxa.data.movie_details_remote.MovieDetailsRemoteDataSource
 import com.myaxa.domain.movie_details.MovieDetailsRepository
+import com.myaxa.movie_details_local.MovieDetailsLocalDataSource
+import com.myaxa.movies.database.MoviesDatabaseModule
 import com.myaxa.movies.database.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
+import com.myaxa.network.RetrofitModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,23 +20,43 @@ import javax.inject.Scope
 @Module
 internal interface ApplicationModule {
     companion object {
-        @Provides
-        @ApplicationScope
-        fun provideMoviesLocalDataSource(applicationContext: Context): MoviesLocalDataSource {
-            return MoviesLocalDataSource(applicationContext)
-        }
 
         @Provides
         @ApplicationScope
-        fun provideMoviesRemoteDataSource(): MoviesRemoteDataSource {
-            return MoviesRemoteDataSource(
+        fun provideRetrofitModule(): RetrofitModule {
+            return RetrofitModule(
                 BuildConfig.BASE_URL,
-                BuildConfig.API_KEY
+                BuildConfig.API_KEY,
             )
         }
 
         @Provides
         @ApplicationScope
+        fun provideDatabaseModule(applicationContext: Context): MoviesDatabaseModule {
+            return MoviesDatabaseModule(applicationContext)
+        }
+
+        @Provides
+        fun provideMoviesRemoteDataSource(retrofitModule: RetrofitModule): MoviesRemoteDataSource {
+            return MoviesRemoteDataSource(retrofitModule)
+        }
+
+        @Provides
+        fun provideMoviesLocalDataSource(databaseModule: MoviesDatabaseModule): MoviesLocalDataSource {
+            return MoviesLocalDataSource(databaseModule)
+        }
+
+        @Provides
+        fun provideMovieDetailsRemoteDataSource(retrofitModule: RetrofitModule): MovieDetailsRemoteDataSource {
+            return MovieDetailsRemoteDataSource(retrofitModule)
+        }
+
+        @Provides
+        fun provideMovieDetailsLocalDataSource(databaseModule: MoviesDatabaseModule): MovieDetailsLocalDataSource {
+            return MovieDetailsLocalDataSource(databaseModule)
+        }
+
+        @Provides
         fun provideNavigator(): Navigator {
             return Navigator(R.id.main)
         }

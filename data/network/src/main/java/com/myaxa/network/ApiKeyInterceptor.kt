@@ -1,4 +1,4 @@
-package com.myaxa.movies_api
+package com.myaxa.network
 
 import okhttp3.Interceptor
 import okhttp3.Response

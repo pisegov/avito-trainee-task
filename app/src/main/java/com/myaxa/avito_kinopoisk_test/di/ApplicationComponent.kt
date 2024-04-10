@@ -2,6 +2,7 @@ package com.myaxa.avito_kinopoisk_test.di
 
 import android.content.Context
 import com.myaxa.movie.details.api.MovieDetailsApi
+import com.myaxa.movie.details.api.MovieDetailsDependencies
 import com.myaxa.movie.details.di.MovieDetailsApiModule
 import com.myaxa.movies_catalog.di.MoviesCatalogDependencies
 import dagger.BindsInstance
@@ -15,7 +16,10 @@ import dagger.Component
     ]
 )
 @ApplicationScope
-internal interface ApplicationComponent : MoviesCatalogDependencies {
+internal interface ApplicationComponent :
+    MoviesCatalogDependencies,
+    MovieDetailsDependencies {
+
     @Component.Factory
     interface Factory {
         fun create(

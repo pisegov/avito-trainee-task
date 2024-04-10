@@ -18,4 +18,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.jakarta.inject.api)
     implementation(libs.okhttp.logging.interceptor)
+
+    implementation(project(":data:network"))
 }

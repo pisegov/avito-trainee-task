@@ -8,10 +8,16 @@ import com.myaxa.movies.database.models.MovieDBO
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-internal interface MoviesDao {
+interface MoviesDao {
 
     @Query("select * from movies")
     fun getAll(): Flow<List<MovieDBO>>
+
+    @Query("select * from movies where id like :id")
+    fun getMovieById(id: Long): Flow<MovieDBO?>
+
+    @Upsert
+    fun insertMovie(movieDBO: MovieDBO)
 
     @Query("select * from movies where id in (:ids)")
     fun getMoviesWithId(ids: List<Long>): Flow<List<MovieDBO>>

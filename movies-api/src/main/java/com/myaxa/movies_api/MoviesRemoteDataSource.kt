@@ -2,6 +2,7 @@ package com.myaxa.movies_api
 
 import com.myaxa.movies_api.models.FilterOptionDTO
 import com.myaxa.movies_api.models.ResponseDTO
+import com.myaxa.network.RetrofitModule
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -49,11 +50,8 @@ class MoviesRemoteDataSource @Inject internal constructor(
     }
 }
 
-fun MoviesRemoteDataSource(
-    baseUrl: String,
-    apiKey: String,
-): MoviesRemoteDataSource {
-    val api: MoviesApi = retrofit(baseUrl, apiKey).create()
+fun MoviesRemoteDataSource(retrofitModule: RetrofitModule): MoviesRemoteDataSource {
+    val api: MoviesApi = retrofitModule.retrofit.create()
 
     return MoviesRemoteDataSource(api)
 }

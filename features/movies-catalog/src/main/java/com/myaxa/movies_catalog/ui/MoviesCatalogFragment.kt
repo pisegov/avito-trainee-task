@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myaxa.movie.details.api.MovieDetailsApiProvider
@@ -29,7 +28,7 @@ class MoviesCatalogFragment : Fragment(R.layout.fragment_movies_catalog) {
 
     private val dependencies: MoviesCatalogDependencies
         get() = (requireActivity().applicationContext as MoviesCatalogDependenciesProvider)
-            .provideDependencies()
+            .provideMovieCatalogDependencies()
 
     private val viewModel: MoviesCatalogViewModel by viewModels { dependencies.viewModelFactory }
 

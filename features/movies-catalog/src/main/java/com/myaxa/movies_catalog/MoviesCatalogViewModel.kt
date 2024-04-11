@@ -7,9 +7,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.myaxa.movies_catalog.util.toMovieUI
-import com.myaxa.movies_data.Filters
-import com.myaxa.movies_data.Movie
-import com.myaxa.movies_data.MoviesRepository
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

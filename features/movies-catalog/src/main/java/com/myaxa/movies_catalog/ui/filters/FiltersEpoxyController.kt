@@ -1,11 +1,11 @@
 package com.myaxa.movies_catalog.ui.filters
 
 import com.airbnb.epoxy.EpoxyController
-import com.myaxa.movies_data.Filters
+import com.myaxa.movies_catalog.Filters
 import javax.inject.Inject
 
 class FiltersEpoxyController @Inject constructor() : EpoxyController() {
-    var filters: Filters? = null
+    var filters: com.myaxa.movies_catalog.Filters? = null
         set(value) {
             field = value
             updatedFilters = value

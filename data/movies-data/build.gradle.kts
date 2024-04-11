@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.myaxa.data.movie_details"
+    namespace = "com.myaxa.movies_data"
     compileSdk = 34
 
     defaultConfig {
@@ -32,16 +33,13 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.jakarta.inject.api)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.androidx.paging)
 
-    implementation(project(":domain:movie-details"))
+    implementation(project(":domain:movies-catalog"))
     implementation(project(":data:movies-remote"))
     implementation(project(":data:database"))
     implementation(project(":data:mappers"))
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

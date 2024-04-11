@@ -57,7 +57,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(project(":movies-data"))
     implementation(project(":features:movie-details-api"))
+    implementation(project(":domain:movies-catalog"))
     implementation(project(":common"))
 }

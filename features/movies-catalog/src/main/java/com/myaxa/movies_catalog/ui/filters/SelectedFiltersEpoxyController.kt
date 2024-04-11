@@ -5,16 +5,16 @@ import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemSelectedFilterCardBinding
-import com.myaxa.movies_data.Filter
-import com.myaxa.movies_data.FilterType
-import com.myaxa.movies_data.Filters
+import com.myaxa.movies_catalog.Filter
+import com.myaxa.movies_catalog.FilterType
+import com.myaxa.movies_catalog.Filters
 import javax.inject.Inject
 
 class ChosenFiltersEpoxyController @Inject constructor(
     private val viewModel: MoviesCatalogViewModel,
 ) : EpoxyController() {
 
-    var filters: Filters? = null
+    var filters: com.myaxa.movies_catalog.Filters? = null
         set(value) {
             field = value
 
@@ -24,7 +24,7 @@ class ChosenFiltersEpoxyController @Inject constructor(
                 map.keys.forEach { type ->
                     map[type]?.let {
                         when (it) {
-                            is Filter.ListFilter -> {
+                            is com.myaxa.movies_catalog.Filter.ListFilter -> {
                                 if (it.isSelected) {
                                     list.addAll(
                                         it.options.keys.map { key -> FilterCard(type, key) }
@@ -58,7 +58,7 @@ class ChosenFiltersEpoxyController @Inject constructor(
             FilterCardEpoxyModel(card) {
                 val filter = filters?.map?.get(card.type)
                 val updatedFilter = filter?.let {
-                    if (it is Filter.ListFilter) {
+                    if (it is com.myaxa.movies_catalog.Filter.ListFilter) {
                         val map = it.options.toMutableMap()
                         map[card.content] = false
                         it.copy(options = map)
@@ -78,7 +78,7 @@ class ChosenFiltersEpoxyController @Inject constructor(
 }
 
 data class FilterCard(
-    val type: FilterType,
+    val type: com.myaxa.movies_catalog.FilterType,
     val content: String,
 )
 

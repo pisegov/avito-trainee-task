@@ -1,6 +1,6 @@
-package com.myaxa.domain.movie_details
+package com.myaxa.movies_catalog
 
-data class MovieDetails (
+data class Movie(
     val id: Long,
     val name: String?,
     val type: String,
@@ -9,8 +9,6 @@ data class MovieDetails (
     val reviewCount: Int? = null,
     val ageRating: Int? = null,
     val poster: String? = null,
-    val description: String? = null,
-    val shortDescription: String? = null,
     //  val genres: List<String> = listOf(),
     //  val networks: List<String> = listOf(),
     //  val countries: List<String> = listOf(),

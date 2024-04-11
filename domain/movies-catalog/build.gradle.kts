@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.myaxa.data.movie_details"
+    namespace = "com.myaxa.domainmovies_catalog"
     compileSdk = 34
 
     defaultConfig {
@@ -32,14 +32,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.jakarta.inject.api)
-
-    implementation(project(":domain:movie-details"))
-    implementation(project(":data:movies-remote"))
-    implementation(project(":data:database"))
-    implementation(project(":data:mappers"))
+    implementation(libs.androidx.paging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

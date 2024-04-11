@@ -58,18 +58,20 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
-    implementation(project(":database"))
-    implementation(project(":movies-api"))
-    implementation(project(":movies-data"))
     implementation(project(":common"))
-    implementation(project(":data:network"))
-    implementation(project(":data:movie-details-remote"))
-    implementation(project(":data:movie-details-local"))
+
     implementation(project(":features:movies-catalog"))
     implementation(project(":features:movie-details-api"))
     implementation(project(":features:movie-details-impl"))
+
+    implementation(project(":domain:movies-catalog"))
     implementation(project(":domain:movie-details"))
+
     implementation(project(":data:movie-details-data"))
+    implementation(project(":data:database"))
+    implementation(project(":data:movies-remote"))
+    implementation(project(":data:movies-data"))
+    implementation(project(":data:network"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

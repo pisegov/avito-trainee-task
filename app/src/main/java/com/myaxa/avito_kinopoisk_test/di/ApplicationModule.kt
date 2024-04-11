@@ -5,12 +5,12 @@ import com.myaxa.avito_kinopoisk_test.BuildConfig
 import com.myaxa.movies.common.Navigator
 import com.myaxa.avito_kinopoisk_test.R
 import com.myaxa.data.movie_details.MovieDetailsRepositoryImpl
-import com.myaxa.data.movie_details_remote.MovieDetailsRemoteDataSource
 import com.myaxa.domain.movie_details.MovieDetailsRepository
-import com.myaxa.movie_details_local.MovieDetailsLocalDataSource
 import com.myaxa.movies.database.MoviesDatabaseModule
-import com.myaxa.movies.database.MoviesLocalDataSource
+import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
+import com.myaxa.movies_catalog.MoviesRepository
+import com.myaxa.movies_data.MoviesRepositoryImpl
 import com.myaxa.network.RetrofitModule
 import dagger.Binds
 import dagger.Module
@@ -47,16 +47,6 @@ internal interface ApplicationModule {
         }
 
         @Provides
-        fun provideMovieDetailsRemoteDataSource(retrofitModule: RetrofitModule): MovieDetailsRemoteDataSource {
-            return MovieDetailsRemoteDataSource(retrofitModule)
-        }
-
-        @Provides
-        fun provideMovieDetailsLocalDataSource(databaseModule: MoviesDatabaseModule): MovieDetailsLocalDataSource {
-            return MovieDetailsLocalDataSource(databaseModule)
-        }
-
-        @Provides
         fun provideNavigator(): Navigator {
             return Navigator(R.id.main)
         }
@@ -64,6 +54,9 @@ internal interface ApplicationModule {
 
     @Binds
     fun provideMovieDetailsRepository(impl: MovieDetailsRepositoryImpl): MovieDetailsRepository
+
+    @Binds
+    fun provideMoviesRepository(impl: MoviesRepositoryImpl): MoviesRepository
 }
 
 @Scope

@@ -2,6 +2,7 @@ package com.myaxa.data.actors_remote
 
 import com.myaxa.domain.movie_details.Actor
 import com.myaxa.domain.movie_details.DetailsInfoModel
+import com.myaxa.domain.movie_details.Review
 import com.myaxa.network.RetrofitModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,7 +19,9 @@ class MovieDetailsInfoDataSource internal constructor(private val api: MovieDeta
             Actor::class.java -> {
                api.getActorsByMovieId(movieId, page, pageSize)
             }
-
+            Review::class.java -> {
+                api.getReviewByMovieId(movieId, page, pageSize)
+            }
             else -> {
                 api.getImagesByMovieId(movieId, page, pageSize)
             }

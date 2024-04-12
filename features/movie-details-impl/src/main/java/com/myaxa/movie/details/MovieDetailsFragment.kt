@@ -9,13 +9,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
-import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.myaxa.movie.details.api.MovieDetailsDependenciesProvider
 import com.myaxa.movie.details.di.DaggerMovieDetailsComponent
 import com.myaxa.movie.details.impl.R
 import com.myaxa.movie.details.impl.databinding.FragmentMovieDetailsBinding
 import com.myaxa.movie.details.models.AdditionalListItem
+import com.myaxa.movie.details.models.MovieDetailsUI
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -70,13 +70,14 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
         }
 
         observeListFlow(viewModel.actorsFlow, controller.actorsEpoxyController)
+        observeListFlow(viewModel.reviewsFlow, controller.reviewsEpoxyController)
         observeListFlow(viewModel.imagesFlow, controller.imagesEpoxyController)
     }
 
     private fun <T: AdditionalListItem> observeListFlow(flow: Flow<PagingData<T>>, controller: PagingDataEpoxyController<T>) {
         lifecycleScope.launch {
-            flow.collect { images ->
-                images.let {
+            flow.collect { list ->
+                list.let {
                     controller.submitData(it)
                     controller.requestModelBuild()
                 }

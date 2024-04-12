@@ -2,4 +2,6 @@
 <resources>
     <color name="tag">@color/m3_sys_color_dark_primary</color>
     <color name="dark_grey">#6D6D80</color>
+    <color name="holo_green_dark">#ff669900</color>
+    <color name="holo_red_dark">#ffcc0000</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.myaxa.movie.details
+package com.myaxa.movie.details.models
 
 import com.myaxa.domain.movie_details.MovieDetails
 

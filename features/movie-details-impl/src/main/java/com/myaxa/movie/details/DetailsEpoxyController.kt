@@ -6,10 +6,14 @@ import com.myaxa.movie.details.details_items.ActorsListEpoxyModel
 import com.myaxa.movie.details.details_items.DescriptionEpoxyModel
 import com.myaxa.movie.details.details_items.ImagesEpoxyController
 import com.myaxa.movie.details.details_items.ImagesListEpoxyModel
+import com.myaxa.movie.details.details_items.ReviewsEpoxyController
+import com.myaxa.movie.details.details_items.ReviewsListEpoxyModel
+import com.myaxa.movie.details.models.MovieDetailsUI
 import javax.inject.Inject
 
 internal class DetailsEpoxyController @Inject constructor(
     val actorsEpoxyController: ActorsEpoxyController,
+    val reviewsEpoxyController: ReviewsEpoxyController,
     val imagesEpoxyController: ImagesEpoxyController,
 ) : EpoxyController() {
 
@@ -29,6 +33,10 @@ internal class DetailsEpoxyController @Inject constructor(
 
             ActorsListEpoxyModel(actorsEpoxyController)
                 .id("actors_list")
+                .addTo(this@DetailsEpoxyController)
+
+            ReviewsListEpoxyModel(reviewsEpoxyController)
+                .id("reviews_list")
                 .addTo(this@DetailsEpoxyController)
 
             ImagesListEpoxyModel(imagesEpoxyController)

@@ -11,11 +11,15 @@ import com.myaxa.domain.movie_details.Actor
 import com.myaxa.domain.movie_details.DetailsInfoModel
 import com.myaxa.domain.movie_details.Image
 import com.myaxa.domain.movie_details.MovieDetailsRepository
+import com.myaxa.domain.movie_details.Review
 import com.myaxa.movie.details.models.ActorUI
 import com.myaxa.movie.details.models.AdditionalListItem
 import com.myaxa.movie.details.models.ImageUI
+import com.myaxa.movie.details.models.ReviewUI
 import com.myaxa.movie.details.models.toActorUI
 import com.myaxa.movie.details.models.toImageUI
+import com.myaxa.movie.details.models.toMovieDetailsUI
+import com.myaxa.movie.details.models.toReviewUI
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -36,6 +40,8 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     val actorsFlow: Flow<PagingData<ActorUI>> = additionalListFlow(Actor::class.java) as Flow<PagingData<ActorUI>>
+
+    val reviewsFlow = additionalListFlow(Review::class.java, 3) as Flow<PagingData<ReviewUI>>
 
     val imagesFlow = additionalListFlow(Image::class.java, 3) as Flow<PagingData<ImageUI>>
 
@@ -82,6 +88,10 @@ class MovieDetailsViewModel @Inject constructor(
 
             Actor::class.java -> {
                 (item as Actor).toActorUI()
+            }
+
+            Review::class.java -> {
+                (item as Review).toReviewUI()
             }
 
             else -> {

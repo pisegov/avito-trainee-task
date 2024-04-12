@@ -20,6 +20,6 @@ dependencies {
 
     implementation(project(":domain:movie-details"))
     implementation(project(":data:movies-remote"))
-    implementation(project(":data:actors-remote"))
+    implementation(project(":data:movie-details-remote"))
     implementation(project(":data:database"))
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import com.myaxa.avito_kinopoisk_test.BuildConfig
 import com.myaxa.movies.common.Navigator
 import com.myaxa.avito_kinopoisk_test.R
-import com.myaxa.data.actors_remote.ActorsRemoteDataSource
+import com.myaxa.data.actors_remote.MovieDetailsInfoDataSource
 import com.myaxa.data.movie_details.MovieDetailsRepositoryImpl
 import com.myaxa.domain.movie_details.MovieDetailsRepository
 import com.myaxa.movies.database.MoviesDatabaseModule
@@ -48,8 +48,8 @@ internal interface ApplicationModule {
         }
 
         @Provides
-        fun provideActorsRemoteDataSource(retrofitModule: RetrofitModule): ActorsRemoteDataSource {
-            return ActorsRemoteDataSource(retrofitModule)
+        fun provideMovieDetailsInfoRemoteDataSource(retrofitModule: RetrofitModule): MovieDetailsInfoDataSource {
+            return MovieDetailsInfoDataSource(retrofitModule)
         }
 
         @Provides

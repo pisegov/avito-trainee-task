@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kapt)
 }
 
 android {
@@ -36,12 +35,11 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.paging)
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    implementation(libs.jakarta.inject.api)
 
     implementation(project(":domain:movie-details"))
     implementation(project(":data:movies-remote"))
-    implementation(project(":data:actors-remote"))
+    implementation(project(":data:movie-details-remote"))
     implementation(project(":data:database"))
     implementation(project(":data:mappers"))
 

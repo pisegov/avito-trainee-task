@@ -70,7 +70,7 @@ dependencies {
     implementation(project(":data:movies-data"))
     implementation(project(":data:movie-details-data"))
     implementation(project(":data:movies-remote"))
-    implementation(project(":data:actors-remote"))
+    implementation(project(":data:movie-details-remote"))
     implementation(project(":data:network"))
     implementation(project(":data:database"))
 

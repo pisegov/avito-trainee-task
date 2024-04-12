@@ -54,7 +54,7 @@ class MovieDetailsViewModel @Inject constructor(
                 initialLoadSize = 10
             )
         ) {
-            repository.getActors(id)
+            repository.getInfo(id, Actor::class.java)
         }
     }
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDetailsRepository {
     fun getMovieDetailsFlow(id: Long): Flow<MovieDetails?>
 
-    fun getActors(movieId: Long): PagingSource<Int, Actor>
-
     suspend fun loadMovieDetails(id: Long)
+
+    fun <T: DetailsInfoModel> getInfo(movieId: Long, type: Class<T>): PagingSource<Int, T>
 }

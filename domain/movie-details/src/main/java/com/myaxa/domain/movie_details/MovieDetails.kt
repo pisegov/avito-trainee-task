@@ -9,6 +9,7 @@ data class MovieDetails (
     val reviewCount: Int? = null,
     val ageRating: Int? = null,
     val poster: String? = null,
+    val backdrop: String? = null,
     val description: String? = null,
     val shortDescription: String? = null,
     //  val genres: List<String> = listOf(),

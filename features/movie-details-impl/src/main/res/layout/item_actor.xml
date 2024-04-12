@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/actor_card_width"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/actor_photo_width"
+        android:layout_height="@dimen/actor_photo_height"
+        android:scaleType="centerCrop"
+        app:shapeAppearance="@style/RoundedSquare" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="4dp"
+        android:textAlignment="center"
+        android:lineSpacingExtra="2sp"
+        android:textAppearance="@style/actor_name"
+        />
+
+</LinearLayout>

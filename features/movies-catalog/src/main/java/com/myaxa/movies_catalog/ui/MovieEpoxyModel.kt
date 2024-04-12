@@ -5,6 +5,7 @@ import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemMovieBinding
 import com.myaxa.movies_catalog.models.MovieInCatalog
+import com.myaxa.movies.common.R as CommonR
 
 data class MovieEpoxyModel(
     val model: MovieInCatalog,
@@ -13,8 +14,8 @@ data class MovieEpoxyModel(
 
     override fun ItemMovieBinding.bind() {
         image.load(model.poster) {
-            placeholder(R.drawable.movie_placeholder)
-            error(R.drawable.movie_placeholder)
+            placeholder(CommonR.drawable.movie_placeholder)
+            error(CommonR.drawable.movie_placeholder)
         }
 
         image.setOnClickListener {

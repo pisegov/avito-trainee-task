@@ -12,6 +12,7 @@ fun MovieDBO.toMovieDetails() = MovieDetails(
     reviewCount = reviewCount,
     ageRating = ageRating,
     poster = poster,
+    backdrop = backdrop,
     description = description,
     shortDescription = shortDescription,
     /*

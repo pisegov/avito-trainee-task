@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actor_card_width">160dp</dimen>
+    <dimen name="actor_photo_width">80dp</dimen>
+    <dimen name="actor_photo_height">120dp</dimen>
+</resources>

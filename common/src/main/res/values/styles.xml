@@ -5,4 +5,14 @@
         <item name="cornerSize">10%</item>
     </style>
 
+    <style name="Widget.App.CardView.Surface" parent="Widget.Material3.CardView.Elevated">
+        <item name="android:elevation">8dp</item>
+        <item name="cardCornerRadius">10dp</item>
+    </style>
+
+    <style name="RatingStar">
+        <item name="tint">@color/rating_star_background</item>
+        <item name="android:src">@drawable/star_icon</item>
+    </style>
+
 </resources>

@@ -39,11 +39,17 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
-
     implementation(libs.viewbindingpropertydelegate)
     implementation(libs.androidx.lifecycle.viewmodel)
 
+    implementation(libs.coil)
+
+    implementation(libs.airbnb.epoxy)
+    implementation(libs.airbnb.epoxy.paging)
+    kapt(libs.airbnb.epoxy.processor)
+
     implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 
     implementation(project(":features:movie-details-api"))
     implementation(project(":domain:movie-details"))

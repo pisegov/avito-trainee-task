@@ -30,9 +30,9 @@ class MoviesPagingSource @AssistedInject constructor(
                 loadWithQuery(params, page)
             }
         } catch (exception: IOException) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         } catch (exception: Exception) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         }
     }
 

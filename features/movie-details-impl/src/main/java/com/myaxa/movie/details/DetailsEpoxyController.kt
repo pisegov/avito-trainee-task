@@ -1,16 +1,16 @@
 package com.myaxa.movie.details
 
-import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.epoxy.EpoxyController
-import com.myaxa.movie.details.actors.ActorsEpoxyController
-import com.myaxa.movie.details.impl.R
-import com.myaxa.movie.details.impl.databinding.ItemActorsListBinding
-import com.myaxa.movie.details.impl.databinding.ItemDescriptionBinding
-import com.myaxa.movies.common.ViewBindingKotlinModel
+import com.myaxa.movie.details.details_items.ActorsEpoxyController
+import com.myaxa.movie.details.details_items.ActorsListEpoxyModel
+import com.myaxa.movie.details.details_items.DescriptionEpoxyModel
+import com.myaxa.movie.details.details_items.ImagesEpoxyController
+import com.myaxa.movie.details.details_items.ImagesListEpoxyModel
 import javax.inject.Inject
 
 internal class DetailsEpoxyController @Inject constructor(
     val actorsEpoxyController: ActorsEpoxyController,
+    val imagesEpoxyController: ImagesEpoxyController,
 ) : EpoxyController() {
 
     var model: MovieDetailsUI? = null
@@ -30,27 +30,11 @@ internal class DetailsEpoxyController @Inject constructor(
             ActorsListEpoxyModel(actorsEpoxyController)
                 .id("actors_list")
                 .addTo(this@DetailsEpoxyController)
+
+            ImagesListEpoxyModel(imagesEpoxyController)
+                .id("images_list")
+                .addTo(this@DetailsEpoxyController)
         }
     }
 }
 
-internal data class DescriptionEpoxyModel(
-    private val text: String,
-) : ViewBindingKotlinModel<ItemDescriptionBinding>(R.layout.item_description) {
-
-    override fun ItemDescriptionBinding.bind() {
-        description.text = text
-    }
-}
-
-internal data class ActorsListEpoxyModel(
-    private val actorsEpoxyController: ActorsEpoxyController,
-) : ViewBindingKotlinModel<ItemActorsListBinding>(R.layout.item_actors_list) {
-
-    override fun ItemActorsListBinding.bind() {
-        val context = this.root.context
-        val layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
-        list.setController(actorsEpoxyController)
-        list.layoutManager = layoutManager
-    }
-}

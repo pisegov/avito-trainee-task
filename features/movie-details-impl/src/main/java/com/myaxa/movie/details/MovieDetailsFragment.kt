@@ -6,12 +6,17 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
+import com.airbnb.epoxy.EpoxyController
+import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.myaxa.movie.details.api.MovieDetailsDependenciesProvider
 import com.myaxa.movie.details.di.DaggerMovieDetailsComponent
 import com.myaxa.movie.details.impl.R
 import com.myaxa.movie.details.impl.databinding.FragmentMovieDetailsBinding
+import com.myaxa.movie.details.models.AdditionalListItem
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import kotlin.math.roundToInt
@@ -64,10 +69,15 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
             }
         }
 
+        observeListFlow(viewModel.actorsFlow, controller.actorsEpoxyController)
+        observeListFlow(viewModel.imagesFlow, controller.imagesEpoxyController)
+    }
+
+    private fun <T: AdditionalListItem> observeListFlow(flow: Flow<PagingData<T>>, controller: PagingDataEpoxyController<T>) {
         lifecycleScope.launch {
-            viewModel.actorsFlow.collect { actors ->
-                actors?.let {
-                    controller.actorsEpoxyController.submitData(it)
+            flow.collect { images ->
+                images.let {
+                    controller.submitData(it)
                     controller.requestModelBuild()
                 }
             }
@@ -90,8 +100,8 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
             tvReviewsNumber.text = model.reviewCount?.let { "$it отзывов" }
 
             model.rating?.let { rating ->
-                val nf = NumberFormat.getNumberInstance();
-                nf.setMaximumFractionDigits(1);
+                val nf = NumberFormat.getNumberInstance()
+                nf.setMaximumFractionDigits(1)
                 ratingValue.text = nf.format(rating)
                 listOf(star1, star2, star3, star4, star5).forEachIndexed { index, star ->
                     star.isEnabled = index < (rating.roundToInt() / 2)

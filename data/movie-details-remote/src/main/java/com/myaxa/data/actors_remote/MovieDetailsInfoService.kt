@@ -21,5 +21,6 @@ interface MovieDetailsInfoService {
         @Query("movieId") @IntRange(from = 250, to = 7000000) movieId: Long,
         @Query(value = "page") @IntRange(from = 1) page: Int = 1,
         @Query(value = "limit") @IntRange(from = 1, to = 20) limit: Int = 10,
+        @Query("type") type: List<String> = listOf("!cover"),
     ): Result<ResponseDTO<ImageDTO>>
 }

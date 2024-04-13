@@ -26,6 +26,8 @@ internal interface MoviesApi {
         @Query(value = "countries.name") countries: List<String>?,
         @Query(value = "type") types: List<String>?,
         @Query(value = "networks.items.name") networks: List<String>?,
+        @Query(value = "genres.name") genres: List<String>?,
+        @Query(value = "ageRating") ageRatings: List<String>?,
     ): Result<ResponseDTO>
 
     @GET("v1.4/movie")
@@ -36,6 +38,8 @@ internal interface MoviesApi {
         @Query(value = "countries.name") countries: List<String>?,
         @Query(value = "type") types: List<String>?,
         @Query(value = "networks.items.name") networks: List<String>?,
+        @Query(value = "genres.name") genres: List<String>?,
+        @Query(value = "ageRating") ageRatings: List<String>?,
     ): Result<ResponseDTO>
 
     @GET("v1/movie/possible-values-by-field")

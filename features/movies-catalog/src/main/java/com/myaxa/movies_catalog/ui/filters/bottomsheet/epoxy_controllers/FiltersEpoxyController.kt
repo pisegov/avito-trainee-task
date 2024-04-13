@@ -26,6 +26,14 @@ class FiltersEpoxyController @Inject constructor(
         _filtersFlow.update { it?.copy(networks = filter) }
     }
 
+    private val genresEpoxyController = listEpoxyControllerFactory.create { filter ->
+        _filtersFlow.update { it?.copy(genres = filter) }
+    }
+
+    private val ageRatingsEpoxyController = listEpoxyControllerFactory.create { filter ->
+        _filtersFlow.update { it?.copy(ageRatings = filter) }
+    }
+
     private val _filtersFlow = MutableStateFlow<Filters?>(null)
     val filtersFlow = _filtersFlow.asStateFlow()
 
@@ -58,12 +66,20 @@ class FiltersEpoxyController @Inject constructor(
                 .id("types_filter").addTo(this)
 
             countriesEpoxyController.filter = it.countries
-            ListFilterEpoxyModel(it.countries.title, countriesEpoxyController)
+            ListFilterEpoxyModel(it.countries.title, countriesEpoxyController, 1)
                 .id("countries_filter").addTo(this)
 
             networksEpoxyController.filter = it.networks
             ListFilterEpoxyModel(it.networks.title, networksEpoxyController, 1)
                 .id("networks_filter").addTo(this)
+
+            genresEpoxyController.filter = it.genres
+            ListFilterEpoxyModel(it.genres.title, genresEpoxyController, 1)
+                .id("genres_filter").addTo(this)
+
+            ageRatingsEpoxyController.filter = it.ageRatings
+            ListFilterEpoxyModel(it.ageRatings.title, ageRatingsEpoxyController, 1)
+                .id("age_ratings_filter").addTo(this)
         }
     }
 }

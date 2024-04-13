@@ -1,58 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomsheet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <!-- Drag handle for accessibility -->
-        <!--        <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
-        <!--            android:id="@+id/drag_handle"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"/>-->
 
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/filters"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="4dp"
             app:itemSpacing="6dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/ok_button"
-            tools:listitem="@layout/item_filter_year"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_filter_year" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
-            style="@style/Button.BottomSheet"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="cancel"
-            app:layout_constraintBottom_toBottomOf="@id/ok_button"
-            app:layout_constraintEnd_toStartOf="@+id/ok_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ok_button" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ok_button"
-            style="@style/Button.BottomSheet"
-            android:text="ok"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cancel_button"
-            app:layout_constraintTop_toBottomOf="@id/filters">
-
-        </com.google.android.material.button.MaterialButton>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

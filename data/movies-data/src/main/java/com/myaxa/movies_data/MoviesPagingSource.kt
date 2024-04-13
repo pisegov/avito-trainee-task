@@ -51,6 +51,8 @@ class MoviesPagingSource @AssistedInject constructor(
             countries = if (filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null,
             types = if (filters?.types?.isSelected == true) filters.types.selectedOptions() else null,
             networks = if (filters?.networks?.isSelected == true) filters.networks.selectedOptions() else null,
+            genres = if (filters?.genres?.isSelected == true) filters.genres.selectedOptions() else null,
+            ageRatings = if (filters?.ageRatings?.isSelected == true) filters.ageRatings.selectedOptions() else null,
         )
 
         val list = responseResult.getOrNull()?.movies?.map { it.toMovieDBO().toMovie() } ?: emptyList()
@@ -76,6 +78,8 @@ class MoviesPagingSource @AssistedInject constructor(
             countries = if (filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null,
             types = if (filters?.types?.isSelected == true) filters.types.selectedOptions() else null,
             networks = if (filters?.networks?.isSelected == true) filters.networks.selectedOptions() else null,
+            genres = if (filters?.genres?.isSelected == true) filters.genres.selectedOptions() else null,
+            ageRatings = if (filters?.ageRatings?.isSelected == true) filters.ageRatings.selectedOptions() else null,
         ).getOrNull()?.let { response ->
             response.movies.map { it.toMovieDBO().toMovie() }
         } ?: emptyList()

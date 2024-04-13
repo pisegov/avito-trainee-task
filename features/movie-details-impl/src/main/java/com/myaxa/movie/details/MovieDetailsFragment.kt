@@ -66,12 +66,17 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
                 model?.let {
                     setupViews(it)
                 }
+
+                if (model?.isSeries == true) {
+                    observeListFlow(viewModel.episodesFlow, controller.episodesEpoxyController)
+                }
             }
         }
 
         observeListFlow(viewModel.actorsFlow, controller.actorsEpoxyController)
         observeListFlow(viewModel.reviewsFlow, controller.reviewsEpoxyController)
         observeListFlow(viewModel.imagesFlow, controller.imagesEpoxyController)
+
     }
 
     private fun <T: AdditionalListItem> observeListFlow(flow: Flow<PagingData<T>>, controller: PagingDataEpoxyController<T>) {

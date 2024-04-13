@@ -4,6 +4,8 @@ import com.airbnb.epoxy.EpoxyController
 import com.myaxa.movie.details.details_items.ActorsEpoxyController
 import com.myaxa.movie.details.details_items.ActorsListEpoxyModel
 import com.myaxa.movie.details.details_items.DescriptionEpoxyModel
+import com.myaxa.movie.details.details_items.EpisodesEpoxyController
+import com.myaxa.movie.details.details_items.EpisodesListEpoxyModel
 import com.myaxa.movie.details.details_items.ImagesEpoxyController
 import com.myaxa.movie.details.details_items.ImagesListEpoxyModel
 import com.myaxa.movie.details.details_items.ReviewsEpoxyController
@@ -15,6 +17,7 @@ internal class DetailsEpoxyController @Inject constructor(
     val actorsEpoxyController: ActorsEpoxyController,
     val reviewsEpoxyController: ReviewsEpoxyController,
     val imagesEpoxyController: ImagesEpoxyController,
+    val episodesEpoxyController: EpisodesEpoxyController,
 ) : EpoxyController() {
 
     var model: MovieDetailsUI? = null
@@ -42,6 +45,12 @@ internal class DetailsEpoxyController @Inject constructor(
             ImagesListEpoxyModel(imagesEpoxyController)
                 .id("images_list")
                 .addTo(this@DetailsEpoxyController)
+
+            if (isSeries) {
+                EpisodesListEpoxyModel(episodesEpoxyController)
+                    .id("episodes_list")
+                    .addTo(this@DetailsEpoxyController)
+            }
         }
     }
 }

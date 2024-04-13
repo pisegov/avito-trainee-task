@@ -27,3 +27,16 @@ enum class ReviewType {
     NEUTRAL,
     NEGATIVE,
 }
+data class Season(
+    val movieId: Long,
+    val number: Int,
+    val episodes: List<Episode>
+) : DetailsInfoModel
+
+data class Episode(
+    val seasonNumber: Int,
+    val episodeNumber: Int,
+    val title: String,
+    val date: String,
+    val image : String? = null,
+): DetailsInfoModel

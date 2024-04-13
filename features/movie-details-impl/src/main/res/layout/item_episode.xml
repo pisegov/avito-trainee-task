@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.App.CardView.Surface"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="?attr/colorSurface"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:paddingBottom="10dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@id/image"
+            android:layout_width="352dp"
+            android:layout_height="198dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="198dp"
+            tools:layout_width="352dp">
+
+
+        </androidx.appcompat.widget.AppCompatImageView>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/type"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/season"
+            tools:background="@color/holo_green_dark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/season"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="22dp"
+            android:maxLines="2"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Сезон 1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:maxLines="2"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/season"
+            app:layout_constraintEnd_toStartOf="@+id/date"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/season"
+            tools:text="Серия 1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/season"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/episode"
+            tools:text="18 января 2022" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="32dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/season"
+            app:layout_constraintTop_toBottomOf="@id/season"
+            tools:text="Название серии" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

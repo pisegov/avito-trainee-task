@@ -9,14 +9,17 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.myaxa.domain.movie_details.Actor
 import com.myaxa.domain.movie_details.DetailsInfoModel
+import com.myaxa.domain.movie_details.Episode
 import com.myaxa.domain.movie_details.Image
 import com.myaxa.domain.movie_details.MovieDetailsRepository
 import com.myaxa.domain.movie_details.Review
 import com.myaxa.movie.details.models.ActorUI
 import com.myaxa.movie.details.models.AdditionalListItem
+import com.myaxa.movie.details.models.EpisodeUI
 import com.myaxa.movie.details.models.ImageUI
 import com.myaxa.movie.details.models.ReviewUI
 import com.myaxa.movie.details.models.toActorUI
+import com.myaxa.movie.details.models.toEpisodeUI
 import com.myaxa.movie.details.models.toImageUI
 import com.myaxa.movie.details.models.toMovieDetailsUI
 import com.myaxa.movie.details.models.toReviewUI
@@ -44,6 +47,8 @@ class MovieDetailsViewModel @Inject constructor(
     val reviewsFlow = additionalListFlow(Review::class.java, 3) as Flow<PagingData<ReviewUI>>
 
     val imagesFlow = additionalListFlow(Image::class.java, 3) as Flow<PagingData<ImageUI>>
+
+    val episodesFlow = additionalListFlow(Episode::class.java, 1) as Flow<PagingData<EpisodeUI>>
 
     internal fun loadMovie(id: Long) {
         viewModelScope.launch {
@@ -92,6 +97,10 @@ class MovieDetailsViewModel @Inject constructor(
 
             Review::class.java -> {
                 (item as Review).toReviewUI()
+            }
+
+            Episode::class.java -> {
+                (item as Episode).toEpisodeUI()
             }
 
             else -> {

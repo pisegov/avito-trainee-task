@@ -5,6 +5,8 @@ import androidx.paging.PagingState
 import com.myaxa.data.actors_remote.MovieDetailsInfoDataSource
 import com.myaxa.domain.movie_details.Actor
 import com.myaxa.domain.movie_details.DetailsInfoModel
+import com.myaxa.domain.movie_details.Episode
+import com.myaxa.domain.movie_details.Season
 import java.io.IOException
 
 class MovieDetailsInfoPagingSource<T : DetailsInfoModel>(
@@ -34,6 +36,15 @@ class MovieDetailsInfoPagingSource<T : DetailsInfoModel>(
                         }
                     } else {
                         it
+                    }
+                }
+                ?.run {
+                    if (type == Episode::class.java) {
+                        this
+                            .filter { item -> (item as Season).number != 0 }
+                            .flatMap { item -> (item as Season).episodes }
+                    } else {
+                        this
                     }
                 }
                 ?: emptyList<T>()

@@ -15,6 +15,7 @@ fun MovieDBO.toMovieDetails() = MovieDetails(
     backdrop = backdrop,
     description = description,
     shortDescription = shortDescription,
+    isSeries = isSeries,
     /*
     * // genres
     *

@@ -14,6 +14,7 @@ internal data class MovieDetailsUI(
     val backdrop: String? = null,
     val description: String? = null,
     val shortDescription: String? = null,
+    val isSeries: Boolean,
     //  val genres: List<String> = listOf(),
     //  val networks: List<String> = listOf(),
     //  val countries: List<String> = listOf(),
@@ -33,6 +34,7 @@ internal fun MovieDetails.toMovieDetailsUI(): MovieDetailsUI =
         backdrop = backdrop,
         description = description,
         shortDescription = shortDescription,
+        isSeries = isSeries,
         /*
         * // genres
         *

@@ -10,7 +10,7 @@
         android:layout_width="@dimen/actor_photo_width"
         android:layout_height="@dimen/actor_photo_height"
         android:scaleType="centerCrop"
-        app:shapeAppearance="@style/RoundedSquare" />
+        app:shapeAppearance="@style/RoundedCornersImage" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"

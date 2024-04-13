@@ -6,7 +6,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image"
-        app:shapeAppearance="@style/RoundedSquare"
+        app:shapeAppearance="@style/RoundedCornersImage"
         android:scaleType="centerCrop"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>

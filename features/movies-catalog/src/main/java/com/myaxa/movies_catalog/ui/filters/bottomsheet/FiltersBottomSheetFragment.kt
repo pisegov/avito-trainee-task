@@ -1,4 +1,4 @@
-package com.myaxa.movies_catalog.ui.filters
+package com.myaxa.movies_catalog.ui.filters.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
@@ -16,6 +16,7 @@ import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.BottomsheetFiltersBinding
 import com.myaxa.movies_catalog.di.MoviesCatalogDependenciesProvider
+import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers.FiltersEpoxyController
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

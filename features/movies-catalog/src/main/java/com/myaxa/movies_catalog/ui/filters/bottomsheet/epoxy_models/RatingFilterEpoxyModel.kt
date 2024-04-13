@@ -1,4 +1,4 @@
-package com.myaxa.movies_catalog.ui.filters
+package com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models
 
 import android.text.Editable
 import android.view.inputmethod.EditorInfo
@@ -10,8 +10,8 @@ import com.myaxa.movies_catalog.databinding.ItemFilterRatingBinding
 import com.myaxa.movies_catalog.Filter
 
 data class RatingFilterEpoxyModel(
-    private val model: com.myaxa.movies_catalog.Filter.RatingFilter,
-    private val submitCallback: (com.myaxa.movies_catalog.Filter.RatingFilter) -> Unit,
+    private val model: Filter.RatingFilter,
+    private val submitCallback: (Filter.RatingFilter) -> Unit,
 ) :
     ViewBindingKotlinModel<ItemFilterRatingBinding>(R.layout.item_filter_rating) {
 

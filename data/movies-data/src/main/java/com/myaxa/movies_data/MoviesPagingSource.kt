@@ -48,6 +48,7 @@ class MoviesPagingSource @AssistedInject constructor(
             params.loadSize,
             year = if (filters?.year?.isSelected == true) filters.year.toString() else null,
             rating = if (filters?.rating?.isSelected == true) filters.rating.toString() else null,
+            countries = if(filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null
         )
 
         val list = responseResult.getOrNull()?.movies?.map { it.toMovieDBO().toMovie() } ?: emptyList()
@@ -70,6 +71,7 @@ class MoviesPagingSource @AssistedInject constructor(
             ids = list.map { it.id },
             year = if (filters?.year?.isSelected == true) filters.year.toString() else null,
             rating = if (filters?.rating?.isSelected == true) filters.rating.toString() else null,
+            countries = if(filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null
         ).getOrNull()?.let { response ->
             response.movies.map { it.toMovieDBO().toMovie() }
         } ?: emptyList()

@@ -63,6 +63,10 @@ sealed interface Filter {
             val newOptions = this.options.keys.associateWith { false }
             return copy(options = newOptions)
         }
+
+        fun selectedOptions(): List<String> {
+            return options.entries.filter { it.value }.map { it.key }
+        }
     }
 }
 

@@ -25,22 +25,26 @@ class MoviesRemoteDataSource @Inject internal constructor(
         pageSize: Int,
         year: String? = null,
         rating: String? = null,
+        countries: List<String>? = null,
     ): Result<ResponseDTO> = withContext(Dispatchers.IO) {
         moviesApi.emptyQueryMovies(
             page, pageSize,
             year = year?.let { listOf(it) },
             rating = rating?.let { listOf("$it-10") },
+            countries = countries,
         )
     }
     suspend fun filterMoviesList(
         ids: List<Long>,
         year: String? = null,
         rating: String? = null,
+        countries: List<String>? = null,
     ): Result<ResponseDTO> = withContext(Dispatchers.IO) {
         moviesApi.filter(
             ids = ids,
             year = year?.let { listOf(it) },
-            rating = rating?.let { listOf("$it-10") }
+            rating = rating?.let { listOf("$it-10") },
+            countries = countries,
         )
     }
 

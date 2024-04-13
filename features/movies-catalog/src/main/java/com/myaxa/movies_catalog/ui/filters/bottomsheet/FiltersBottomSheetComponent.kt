@@ -1,6 +1,7 @@
-package com.myaxa.movies_catalog.ui.filters
+package com.myaxa.movies_catalog.ui.filters.bottomsheet
 
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
+import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers.FiltersEpoxyController
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope

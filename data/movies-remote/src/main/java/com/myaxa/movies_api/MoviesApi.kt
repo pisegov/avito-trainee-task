@@ -23,6 +23,7 @@ internal interface MoviesApi {
         @Query(value = "limit") @IntRange(from = 1, to = 20) limit: Int = 10,
         @Query(value = "year") year: List<String>?,
         @Query(value = "rating.kp") rating: List<String>?,
+        @Query(value = "countries.name") countries: List<String>?,
     ): Result<ResponseDTO>
 
     @GET("v1.4/movie")
@@ -30,6 +31,7 @@ internal interface MoviesApi {
         @Query(value = "id") ids: List<Long> = emptyList(),
         @Query(value = "year") year: List<String>?,
         @Query(value = "rating.kp") rating: List<String>?,
+        @Query(value = "countries.name") countries: List<String>?,
     ): Result<ResponseDTO>
 
     @GET("v1/movie/possible-values-by-field")

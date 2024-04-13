@@ -1,4 +1,4 @@
-package com.myaxa.movies_catalog.ui.filters
+package com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models
 
 import android.text.Editable
 import android.view.inputmethod.EditorInfo
@@ -10,8 +10,8 @@ import com.myaxa.movies_catalog.databinding.ItemFilterYearBinding
 import com.myaxa.movies_catalog.Filter
 
 data class YearFilterEpoxyModel(
-    private val model: com.myaxa.movies_catalog.Filter.YearFilter,
-    private val submitCallback: (com.myaxa.movies_catalog.Filter.YearFilter) -> Unit,
+    private val model: Filter.YearFilter,
+    private val submitCallback: (Filter.YearFilter) -> Unit,
 ) : ViewBindingKotlinModel<ItemFilterYearBinding>(R.layout.item_filter_year) {
 
     companion object {

@@ -15,8 +15,8 @@ import com.myaxa.movies.common.Navigator
 import com.myaxa.movies.common.setOnTextChangeListener
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
-import com.myaxa.movies_catalog.ui.filters.ChosenFiltersEpoxyController
-import com.myaxa.movies_catalog.ui.filters.FiltersBottomSheetFragment
+import com.myaxa.movies_catalog.ui.filters.selected_filters.SelectedFiltersEpoxyController
+import com.myaxa.movies_catalog.ui.filters.bottomsheet.FiltersBottomSheetFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class MoviesCatalogViewController @Inject constructor(
     private val fragment: Fragment,
     catalogEpoxyControllerFactory: MoviesEpoxyController.Factory,
-    private val filtersEpoxyController: ChosenFiltersEpoxyController,
+    private val filtersEpoxyController: SelectedFiltersEpoxyController,
     private val viewModel: MoviesCatalogViewModel,
     private val lifecycleScope: LifecycleCoroutineScope,
     private val movieDetailsApi: MovieDetailsApi,

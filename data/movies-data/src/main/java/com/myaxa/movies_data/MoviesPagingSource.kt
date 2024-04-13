@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.myaxa.data.mappers.toMovieDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
-import com.myaxa.movies_catalog.Filters
+import com.myaxa.movies_catalog.filters.Filters
 import com.myaxa.movies_catalog.Movie
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -48,7 +48,9 @@ class MoviesPagingSource @AssistedInject constructor(
             params.loadSize,
             year = if (filters?.year?.isSelected == true) filters.year.toString() else null,
             rating = if (filters?.rating?.isSelected == true) filters.rating.toString() else null,
-            countries = if(filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null
+            countries = if (filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null,
+            types = if (filters?.types?.isSelected == true) filters.types.selectedOptions() else null,
+            networks = if (filters?.networks?.isSelected == true) filters.networks.selectedOptions() else null,
         )
 
         val list = responseResult.getOrNull()?.movies?.map { it.toMovieDBO().toMovie() } ?: emptyList()
@@ -71,7 +73,9 @@ class MoviesPagingSource @AssistedInject constructor(
             ids = list.map { it.id },
             year = if (filters?.year?.isSelected == true) filters.year.toString() else null,
             rating = if (filters?.rating?.isSelected == true) filters.rating.toString() else null,
-            countries = if(filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null
+            countries = if (filters?.countries?.isSelected == true) filters.countries.selectedOptions() else null,
+            types = if (filters?.types?.isSelected == true) filters.types.selectedOptions() else null,
+            networks = if (filters?.networks?.isSelected == true) filters.networks.selectedOptions() else null,
         ).getOrNull()?.let { response ->
             response.movies.map { it.toMovieDBO().toMovie() }
         } ?: emptyList()
@@ -82,6 +86,7 @@ class MoviesPagingSource @AssistedInject constructor(
             nextKey = (page + 1).takeIf { page < pages },
         )
     }
+
     @AssistedFactory
     interface Factory {
         fun create(

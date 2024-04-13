@@ -5,7 +5,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies.common.setOnTextChangeListener
-import com.myaxa.movies_catalog.Filter
+import com.myaxa.movies_catalog.filters.Filter
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemFilterRatingBinding
 

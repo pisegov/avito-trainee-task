@@ -1,8 +1,9 @@
 package com.myaxa.movies_catalog.ui.filters.selected_filters
 
 import com.airbnb.epoxy.EpoxyController
-import com.myaxa.movies_catalog.Filter
-import com.myaxa.movies_catalog.Filters
+import com.myaxa.movies_catalog.filters.Filter
+import com.myaxa.movies_catalog.filters.FilterValue
+import com.myaxa.movies_catalog.filters.Filters
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import javax.inject.Inject
 
@@ -22,13 +23,16 @@ class SelectedFiltersEpoxyController @Inject constructor(
                         when (filter) {
                             is Filter.ListFilter -> {
                                 list.addAll(
-                                    filter.options.filter { it.value }.map { (key, _) -> FilterCard(type, key) }
+                                    filter.options.filter {
+                                        it.value.isSelected
+                                    }.map { (key, value) -> FilterCard(type, key, value.title) }
                                 )
                             }
 
                             else -> {
                                 if (filter.isSelected) {
-                                    list.add(FilterCard(type, filter.toString()))
+                                    val filterString = filter.toString()
+                                    list.add(FilterCard(type, filterString, filterString))
                                 }
                             }
                         }
@@ -54,7 +58,7 @@ class SelectedFiltersEpoxyController @Inject constructor(
                 val updatedFilter = filter?.let {
                     if (it is Filter.ListFilter) {
                         val map = it.options.toMutableMap()
-                        map[card.content] = false
+                        map[card.key] = FilterValue(card.content, false)
                         it.copy(options = map)
                     }
                     else {

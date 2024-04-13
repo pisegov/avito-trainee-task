@@ -7,7 +7,7 @@ import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies.common.setOnTextChangeListener
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemFilterYearBinding
-import com.myaxa.movies_catalog.Filter
+import com.myaxa.movies_catalog.filters.Filter
 
 data class YearFilterEpoxyModel(
     private val model: Filter.YearFilter,

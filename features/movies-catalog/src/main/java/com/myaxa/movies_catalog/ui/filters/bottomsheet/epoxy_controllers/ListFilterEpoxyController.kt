@@ -1,7 +1,7 @@
 package com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers
 
 import com.airbnb.epoxy.EpoxyController
-import com.myaxa.movies_catalog.Filter
+import com.myaxa.movies_catalog.filters.Filter
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.ListFilterOptionEpoxyModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -20,9 +20,9 @@ class ListFilterEpoxyController @AssistedInject constructor(
     override fun buildModels() {
         filter?.let { filter ->
             filter.options.forEach { option ->
-                ListFilterOptionEpoxyModel(option.toPair()) {
+                ListFilterOptionEpoxyModel(option.key, option.value) { key, value ->
                     val map = filter.options.toMutableMap()
-                    map[it.first] = it.second
+                    map[key] = value
                     val new = filter.copy(options = map)
                     submitCallback(new)
                     this.filter = new

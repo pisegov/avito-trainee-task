@@ -26,12 +26,16 @@ class MoviesRemoteDataSource @Inject internal constructor(
         year: String? = null,
         rating: String? = null,
         countries: List<String>? = null,
+        types: List<String>? = null,
+        networks: List<String>? = null,
     ): Result<ResponseDTO> = withContext(Dispatchers.IO) {
         moviesApi.emptyQueryMovies(
             page, pageSize,
             year = year?.let { listOf(it) },
             rating = rating?.let { listOf("$it-10") },
             countries = countries,
+            types = types,
+            networks = networks,
         )
     }
     suspend fun filterMoviesList(
@@ -39,12 +43,16 @@ class MoviesRemoteDataSource @Inject internal constructor(
         year: String? = null,
         rating: String? = null,
         countries: List<String>? = null,
+        types: List<String>? = null,
+        networks: List<String>? = null,
     ): Result<ResponseDTO> = withContext(Dispatchers.IO) {
         moviesApi.filter(
             ids = ids,
             year = year?.let { listOf(it) },
             rating = rating?.let { listOf("$it-10") },
             countries = countries,
+            types = types,
+            networks = networks,
         )
     }
 

@@ -1,7 +1,7 @@
 package com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers
 
 import com.airbnb.epoxy.EpoxyController
-import com.myaxa.movies_catalog.Filters
+import com.myaxa.movies_catalog.filters.Filters
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.YearFilterEpoxyModel
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.ListFilterEpoxyModel
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.RatingFilterEpoxyModel

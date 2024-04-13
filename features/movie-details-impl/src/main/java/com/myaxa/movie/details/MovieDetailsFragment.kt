@@ -101,6 +101,10 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
                     star.isEnabled = index < (rating.roundToInt() / 2)
                 }
             }
+
+            backButton.setOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
         }
     }
 

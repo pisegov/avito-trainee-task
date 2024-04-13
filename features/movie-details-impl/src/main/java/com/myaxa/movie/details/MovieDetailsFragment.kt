@@ -6,6 +6,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
@@ -61,6 +63,7 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.detailsList.setController(controller)
         lifecycleScope.launch {
             viewModel.movieFlow.collect { model ->
                 model?.let {
@@ -73,27 +76,12 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
             }
         }
 
-        observeListFlow(viewModel.actorsFlow, controller.actorsEpoxyController)
-        observeListFlow(viewModel.reviewsFlow, controller.reviewsEpoxyController)
-        observeListFlow(viewModel.imagesFlow, controller.imagesEpoxyController)
-
-    }
-
-    private fun <T: AdditionalListItem> observeListFlow(flow: Flow<PagingData<T>>, controller: PagingDataEpoxyController<T>) {
-        lifecycleScope.launch {
-            flow.collect { list ->
-                list.let {
-                    controller.submitData(it)
-                    controller.requestModelBuild()
-                }
-            }
-        }
+        setupListsObservers()
     }
 
     private fun setupViews(model: MovieDetailsUI) {
         with(binding) {
             controller.model = model
-            detailsList.setController(controller)
 
             backdrop.load(model.backdrop) {
                 placeholder(CommonR.drawable.movie_placeholder)
@@ -112,6 +100,44 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
                 listOf(star1, star2, star3, star4, star5).forEachIndexed { index, star ->
                     star.isEnabled = index < (rating.roundToInt() / 2)
                 }
+            }
+        }
+    }
+
+    private fun setupListsObservers() {
+        observeListFlow(viewModel.actorsFlow, controller.actorsEpoxyController)
+        observeListFlow(viewModel.reviewsFlow, controller.reviewsEpoxyController)
+        observeListFlow(viewModel.imagesFlow, controller.imagesEpoxyController)
+
+        observeLoadingState(controller.actorsEpoxyController.loadStateFlow) { state ->
+            controller.actorsLoadingState = state
+        }
+        observeLoadingState(controller.reviewsEpoxyController.loadStateFlow) { state ->
+            controller.reviewsLoadingState = state
+        }
+        observeLoadingState(controller.imagesEpoxyController.loadStateFlow) { state ->
+            controller.imagesLoadingState = state
+        }
+        observeLoadingState(controller.episodesEpoxyController.loadStateFlow) { state ->
+            controller.episodesLoadingState = state
+        }
+    }
+
+    private fun <T: AdditionalListItem> observeListFlow(flow: Flow<PagingData<T>>, controller: PagingDataEpoxyController<T>) {
+        lifecycleScope.launch {
+            flow.collect { list ->
+                list.let {
+                    controller.submitData(it)
+                    controller.requestModelBuild()
+                }
+            }
+        }
+    }
+
+    private fun observeLoadingState(flow: Flow<CombinedLoadStates>, stateSetter: (LoadState) -> Unit) {
+        lifecycleScope.launch {
+            flow.collect {
+                stateSetter(it.source.refresh)
             }
         }
     }

@@ -48,7 +48,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     val imagesFlow = additionalListFlow(Image::class.java, 3) as Flow<PagingData<ImageUI>>
 
-    val episodesFlow = additionalListFlow(Episode::class.java, 1) as Flow<PagingData<EpisodeUI>>
+    val episodesFlow = additionalListFlow(Episode::class.java, 2) as Flow<PagingData<EpisodeUI>>
 
     internal fun loadMovie(id: Long) {
         viewModelScope.launch {

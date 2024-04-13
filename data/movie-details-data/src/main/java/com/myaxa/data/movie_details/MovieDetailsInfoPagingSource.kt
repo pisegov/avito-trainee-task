@@ -48,6 +48,7 @@ class MovieDetailsInfoPagingSource<T : DetailsInfoModel>(
                     }
                 }
                 ?: emptyList<T>()
+            if (list.isEmpty()) throw Exception()
             val pages = responseResult.getOrNull()?.pages ?: page
 
             return LoadResult.Page(

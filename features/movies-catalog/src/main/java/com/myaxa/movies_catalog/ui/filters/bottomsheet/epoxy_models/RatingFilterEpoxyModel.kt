@@ -5,15 +5,14 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies.common.setOnTextChangeListener
+import com.myaxa.movies_catalog.Filter
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemFilterRatingBinding
-import com.myaxa.movies_catalog.Filter
 
 data class RatingFilterEpoxyModel(
     private val model: Filter.RatingFilter,
     private val submitCallback: (Filter.RatingFilter) -> Unit,
-) :
-    ViewBindingKotlinModel<ItemFilterRatingBinding>(R.layout.item_filter_rating) {
+) : ViewBindingKotlinModel<ItemFilterRatingBinding>(R.layout.item_filter_rating) {
 
     companion object {
         const val LOWER_BOUND: Double = 0.0

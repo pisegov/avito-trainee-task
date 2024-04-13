@@ -1,7 +1,9 @@
 package com.myaxa.movies_catalog.ui.filters.bottomsheet
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.BottomsheetFiltersBinding
 import com.myaxa.movies_catalog.di.MoviesCatalogDependenciesProvider
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers.FiltersEpoxyController
+import com.myaxa.movies_catalog.util.addKeyboardListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -57,25 +60,40 @@ class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
             state = STATE_EXPANDED
         }
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.root.addKeyboardListener {
+                Log.d("keyboard", "$it")
+                binding.cancelButton.isVisible = !it && filtersEpoxyController.filtersFlow.value?.isSelected == true
+                binding.okButton.isVisible = !it
+            }
+        }
+
         binding.filters.setController(filtersEpoxyController)
         binding.filters.isNestedScrollingEnabled = false
 
         binding.okButton.setOnClickListener {
-            viewModel.updateFilters(filtersEpoxyController.updatedFilters)
+            viewModel.updateFilters(filtersEpoxyController.filtersFlow.value)
             dismiss()
         }
 
         binding.cancelButton.setOnClickListener {
-            viewModel.updateFilters(filtersEpoxyController.updatedFilters?.clearedCopy())
+            filtersEpoxyController.clearFilters()
         }
 
         lifecycleScope.launch {
             viewModel.filtersFlow.collectLatest {
                 it?.let {
-                    filtersEpoxyController.filters = it
+                    filtersEpoxyController.updateFilters(it)
 
                     binding.cancelButton.isVisible = it.isSelected
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            filtersEpoxyController.filtersFlow.collect {
+                binding.cancelButton.isVisible = it?.isSelected == true
             }
         }
     }

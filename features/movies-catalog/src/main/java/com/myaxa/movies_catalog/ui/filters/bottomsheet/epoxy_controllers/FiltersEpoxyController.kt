@@ -42,13 +42,6 @@ class FiltersEpoxyController @Inject constructor(
         requestModelBuild()
     }
 
-    fun clearFilters() {
-        _filtersFlow.update {
-            it?.clearedCopy()
-        }
-        requestModelBuild()
-    }
-
     override fun buildModels() {
         filtersFlow.value?.let {
             YearFilterEpoxyModel(it.year) { filter ->

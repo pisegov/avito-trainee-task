@@ -6,6 +6,9 @@ import com.myaxa.movie.details.impl.R
 import com.myaxa.movie.details.impl.databinding.ItemCardsListBinding
 import com.myaxa.movies.common.ViewBindingKotlinModel
 
+/*
+* Общий контроллер для списков отзывов, изображений и эпизодов
+* */
 internal data class CardsListEpoxyModel(
     private val controller: PagingDataEpoxyController<*>,
     private val titleText: String,

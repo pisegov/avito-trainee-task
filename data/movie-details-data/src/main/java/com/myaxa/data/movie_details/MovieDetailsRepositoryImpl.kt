@@ -2,7 +2,8 @@ package com.myaxa.data.movie_details
 
 import androidx.paging.PagingSource
 import com.myaxa.data.actors_remote.MovieDetailsInfoDataSource
-import com.myaxa.data.mappers.toMovieRemoteDBO
+import com.myaxa.data.mappers.toMovieDetails
+import com.myaxa.data.mappers.toMovieFullDBO
 import com.myaxa.domain.movie_details.DetailsInfoModel
 import com.myaxa.domain.movie_details.MovieDetails
 import com.myaxa.domain.movie_details.MovieDetailsRepository
@@ -12,7 +13,7 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MovieDetailsRepositoryImpl @Inject constructor(
+class MovieDetailsRepositoryImpl @Inject internal constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource,
     private val detailsRemoteDataSource: MovieDetailsInfoDataSource,
     private val localDataSource: MoviesLocalDataSource,
@@ -33,7 +34,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
         when {
             result.isSuccess -> {
                 val movie = result.getOrThrow()
-                localDataSource.insertMovie(movie.toMovieRemoteDBO())
+                localDataSource.insertMovie(movie.toMovieFullDBO())
             }
         }
     }

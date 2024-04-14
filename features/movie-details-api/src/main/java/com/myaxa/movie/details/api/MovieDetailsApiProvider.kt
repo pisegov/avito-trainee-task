@@ -6,7 +6,6 @@ interface MovieDetailsApiProvider {
     fun provideMovieDetailsApi(): MovieDetailsApi
 }
 
-
 interface MovieDetailsApi {
     fun provideMovieDetails(id: Long): Fragment
 }

@@ -6,9 +6,6 @@ import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.ItemFilterListBinding
 
-
-
-
 data class ListFilterEpoxyModel(
     val titleText: String,
     val controller: EpoxyController,

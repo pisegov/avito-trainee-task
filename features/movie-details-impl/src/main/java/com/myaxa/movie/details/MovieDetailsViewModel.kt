@@ -23,6 +23,7 @@ import com.myaxa.movie.details.models.toEpisodeUI
 import com.myaxa.movie.details.models.toImageUI
 import com.myaxa.movie.details.models.toMovieDetailsUI
 import com.myaxa.movie.details.models.toReviewUI
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -36,6 +37,7 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _movieFlow = MutableStateFlow(0L)
+    @OptIn(ExperimentalCoroutinesApi::class)
     internal val movieFlow = _movieFlow.flatMapLatest {
         repository.getMovieDetailsFlow(it)
     }.map {
@@ -57,6 +59,7 @@ class MovieDetailsViewModel @Inject constructor(
         _movieFlow.tryEmit(id)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun <T : DetailsInfoModel> additionalListFlow(
         type: Class<T>,
         pageSize: Int = 10,

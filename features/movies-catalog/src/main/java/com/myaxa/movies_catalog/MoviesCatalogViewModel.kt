@@ -7,7 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.myaxa.movies_catalog.filters.Filters
-import com.myaxa.movies_catalog.util.toMovieUI
+import com.myaxa.movies_catalog.models.toMovieUI
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,7 +35,7 @@ class MoviesCatalogViewModel @Inject constructor(
     private val _filtersFlow = MutableStateFlow<Filters?>(null)
     val filtersFlow get() = _filtersFlow.asStateFlow()
 
-    @OptIn(FlowPreview::class)
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val catalogFlow = searchQuery.debounce(1000)
         .combine(filtersFlow, ::newPager)
         .flatMapLatest { pager -> pager.flow.map { pagingData -> pagingData.map { it.toMovieUI() } } }

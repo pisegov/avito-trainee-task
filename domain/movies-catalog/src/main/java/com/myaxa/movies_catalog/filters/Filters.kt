@@ -26,7 +26,7 @@ data class Filters(
             get() = ListFilter("Возрастной рейтинг", listOf("0", "6", "12", "18")
                 .associateWith { FilterValue("$it+", false) })
         val defaultNetworksFilter
-            get() = ListFilter("Сеть производства", listOf("Netflix", "Amazon", "HBO")
+            get() = ListFilter("Сеть производства", listOf("Netflix", "HBO", "Кинопоиск", "START", "Wink")
                 .associateWith { FilterValue(it, false) })
     }
 

@@ -9,7 +9,7 @@ import com.myaxa.domain.movie_details.Episode
 import com.myaxa.domain.movie_details.Season
 import java.io.IOException
 
-class MovieDetailsInfoPagingSource<T : DetailsInfoModel>(
+internal class MovieDetailsInfoPagingSource<T : DetailsInfoModel>(
     private val movieId: Long,
     private val type: Class<T>,
     private val remoteDataSource: MovieDetailsInfoDataSource,

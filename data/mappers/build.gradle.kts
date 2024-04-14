@@ -18,6 +18,7 @@ android {
 
 dependencies {
 
+    implementation(project(":domain:movies-catalog"))
     implementation(project(":domain:movie-details"))
     implementation(project(":data:movies-remote"))
     implementation(project(":data:movie-details-remote"))

@@ -1,5 +1,9 @@
 package com.myaxa.domain.movie_details
 
+/*
+* Интерфейс для доменных моделей дополнительных деталей фильма
+* Нужен для обобщения логики пагинации в списках
+* */
 sealed interface DetailsInfoModel
 data class Actor (
     val id: Long,

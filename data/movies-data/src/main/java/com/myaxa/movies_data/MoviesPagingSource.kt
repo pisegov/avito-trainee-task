@@ -2,7 +2,8 @@ package com.myaxa.movies_data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.myaxa.data.mappers.toMovieRemoteDBO
+import com.myaxa.data.mappers.toMovie
+import com.myaxa.data.mappers.toMovieFullDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
 import com.myaxa.movies_catalog.Movie
@@ -12,7 +13,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import java.io.IOException
 
-class MoviesPagingSource @AssistedInject constructor(
+internal class MoviesPagingSource @AssistedInject constructor(
     @Assisted(QUERY_TAG) private val query: String,
     @Assisted(FILTERS_TAG) private val filters: Filters?,
     private val remoteDataSource: MoviesRemoteDataSource,
@@ -60,7 +61,7 @@ class MoviesPagingSource @AssistedInject constructor(
         val pages = responseResult.getOrNull()?.pages ?: page
 
         localDataSource.insertList(
-            remoteList?.map { it.toMovieRemoteDBO() } ?: emptyList()
+            remoteList?.map { it.toMovieFullDBO() } ?: emptyList()
         )
 
         return LoadResult.Page(
@@ -87,12 +88,12 @@ class MoviesPagingSource @AssistedInject constructor(
             ageRatings = if (filters?.ageRatings?.isSelected == true) filters.ageRatings.selectedOptions() else null,
         ).getOrNull()?.movies
 
-        val filteredMovies = remoteList?.let { list ->
-            list.map { it.toMovie() }
+        val filteredMovies = remoteList?.let { dtosList ->
+            dtosList.map { it.toMovie() }
         } ?: emptyList()
 
         localDataSource.insertList(
-            remoteList?.map { it.toMovieRemoteDBO() } ?: emptyList()
+            remoteList?.map { it.toMovieFullDBO() } ?: emptyList()
         )
 
         return LoadResult.Page(

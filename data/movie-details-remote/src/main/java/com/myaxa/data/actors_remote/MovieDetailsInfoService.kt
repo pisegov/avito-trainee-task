@@ -9,7 +9,7 @@ import com.myaxa.data.actors_remote.models.SeasonDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieDetailsInfoService {
+internal interface MovieDetailsInfoService {
     @GET("v1.4/person")
     suspend fun getActorsByMovieId(
         @Query("movies.id") @IntRange(from = 250, to = 7000000) movieId: Long,

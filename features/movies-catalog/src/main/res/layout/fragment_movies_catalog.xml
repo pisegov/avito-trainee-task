@@ -1,18 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/catalog"
-            android:layout_width="match_parent"
-            android:paddingHorizontal="16dp"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_movie" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/search_bar_background"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="16dp"
+                android:layout_marginVertical="8dp"
+                android:pointerIcon="arrow"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textColorHint="?attr/colorSecondary" />
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@android:color/transparent"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp"
+                app:itemSpacing="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/catalog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_movie" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_margin="32dp"
+        android:contentDescription="filters"
+        android:src="@drawable/ic_filter_list_24" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -29,53 +76,10 @@
         android:layout_gravity="center_vertical"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="Could not load the data :("
+        android:text="@string/couldnt_load_data"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:visibility="gone" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="\@string/searchbar_hint" />
-
-        <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/filters"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginHorizontal="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:background="@android:color/transparent"
-            app:itemSpacing="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"
-            tools:itemCount="3"
-            app:layout_scrollFlags="scroll|enterAlways"
-            tools:listitem="@layout/item_selected_filter_card" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <com.google.android.material.search.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:hint="\@string/searchbar_hint"
-        app:layout_anchor="@id/search_bar">
-        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
-    </com.google.android.material.search.SearchView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_filters"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="32dp"
-        android:contentDescription="filters"
-        android:src="@drawable/ic_filter_list_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

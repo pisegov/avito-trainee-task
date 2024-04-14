@@ -6,6 +6,7 @@ internal data class MovieDetailsUI(
     val id: Long,
     val name: String?,
     val year: Int?,
+    val isSeries: Boolean,
     val rating: Double? = null,
     val reviewCount: Int? = null,
     val ageRating: Int? = null,
@@ -13,7 +14,6 @@ internal data class MovieDetailsUI(
     val backdrop: String? = null,
     val description: String? = null,
     val shortDescription: String? = null,
-    val isSeries: Boolean,
 )
 
 internal fun MovieDetails.toMovieDetailsUI(): MovieDetailsUI =

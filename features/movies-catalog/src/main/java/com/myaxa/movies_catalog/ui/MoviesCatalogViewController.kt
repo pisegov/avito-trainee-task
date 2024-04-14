@@ -1,5 +1,8 @@
 package com.myaxa.movies_catalog.ui
 
+import android.widget.EditText
+import android.widget.ImageView
+import androidx.appcompat.R
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -15,8 +18,8 @@ import com.myaxa.movies.common.Navigator
 import com.myaxa.movies.common.setOnTextChangeListener
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
-import com.myaxa.movies_catalog.ui.filters.selected_filters.SelectedFiltersEpoxyController
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.FiltersBottomSheetFragment
+import com.myaxa.movies_catalog.ui.filters.selected_filters.SelectedFiltersEpoxyController
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,7 +44,7 @@ class MoviesCatalogViewController @Inject constructor(
 
         setupFilterCardsList(filters, btnFilters)
 
-        setupSearch(searchView, searchBar)
+        setupSearchBar(searchBar)
     }
 
     fun setupObservers(binding: FragmentMoviesCatalogBinding) {
@@ -54,6 +57,7 @@ class MoviesCatalogViewController @Inject constructor(
         lifecycleScope.launch {
             viewModel.filtersFlow.collect {
                 filtersEpoxyController.filters = it
+                binding.filters.isVisible = it?.isSelected == true
             }
         }
 
@@ -94,16 +98,10 @@ class MoviesCatalogViewController @Inject constructor(
         }
     }
 
-    private fun setupSearch(searchView: SearchView, searchBar: SearchBar) {
-        searchView.editText.setOnTextChangeListener {
+    private fun setupSearchBar(searchBar: EditText) {
+        searchBar.setOnTextChangeListener {
             val text = it.toString()
             viewModel.updateSearchQuery(text)
-        }
-
-        searchView.editText.setOnEditorActionListener { v, actionId, event ->
-            searchBar.setText(searchView.text)
-            searchView.hide()
-            false
         }
     }
 }

@@ -1,8 +1,21 @@
 #+title: Тестовое задание на стажировку в Avito
 
+#+html: <a href>
+#+html:   <img src="assets/1.jpg" width="180"/>
+#+html:   <img src="assets/2.jpg" width="180"/>
+#+html:   <img src="assets/3.jpg" width="180"/>
+#+html:   <img src="assets/4.jpg" width="180"/>
+#+html:   <img src="assets/5.jpg" width="180"/>
+#+html:   <img src="assets/6.jpg" width="180"/>
+#+html:   <img src="assets/7.jpg" width="180"/>
+#+html:   <img src="assets/8.jpg" width="180"/>
+#+html: </a>
 * Суть задания
 Разработать фронтенд приложения для быстрого поиска информации по фильмам и сериалам с платформы «Кинопоиска».
 * Инструкция по запуску
+- Для сборки использовать Android Studio Hedgehog 2023.1.1 Patch 2 или новее
+  - Версия Android Gradle Pluging не ниже 8.2.2
+
 - В файл ~local.properties~ в корне проекта положить константы ~BASE_URL~ и ~API_KEY~
 #+begin_src
 BASE_URL="https://api.kinopoisk.dev/"
@@ -32,6 +45,14 @@ API_KEY="<ваш_api_key>"
 
 - Можно перейти на страницу фильма из выдачи
 *** Фильтрация
+#+html: <a href>
+#+html:   <img src="assets/filter_1.jpg" width="180"/>
+#+html:   <img src="assets/filter_2.jpg" width="180"/>
+#+html:   <img src="assets/filter_3.jpg" width="180"/>
+#+html:   <img src="assets/filter_4.jpg" width="180"/>
+#+html:   <img src="assets/filter_5.jpg" width="180"/>
+#+html: </a>
+
 **** Год выхода: от 1874 до 2050
 - Если ввести год только в одно поле, выдача будет фильтроваться только по этому году
 - Если ввести год в оба поля, выдача будет фильтроваться по промежутку
@@ -89,6 +110,10 @@ API_KEY="<ваш_api_key>"
 - Архитектура: MVVM
 - DI: Dagger
 - Загрузка изображений: Coil
-- Списки: Epoxy Recycler
+- Списки: EpoxyRecyclerView
 - Пагинация: Paging3
 - БД: Room, SQLite
+* Что не сделано, а хотелось бы
+- Сохранение результатов в бд начато, но не доделано
+- Юнит тестирование
+- Сохранение истории поиска

@@ -1,19 +1,37 @@
 package com.myaxa.data.mappers
 
+import com.myaxa.movies.database.models.AgeRatingDBO
+import com.myaxa.movies.database.models.CountryDBO
+import com.myaxa.movies.database.models.GenreDBO
 import com.myaxa.movies.database.models.MovieDBO
+import com.myaxa.movies.database.models.MovieRemoteDBO
+import com.myaxa.movies.database.models.NetworkDBO
+import com.myaxa.movies.database.models.TypeDBO
 import com.myaxa.movies_api.models.MovieDTO
 
-fun MovieDTO.toMovieDBO() = MovieDBO(
-    id = id,
-    name = name,
-    type = type,
-    year = year,
-    description = description,
-    shortDescription = shortDescription,
-    rating = rating?.kp,
-    ageRating = ageRating,
-    poster = poster?.previewUrl,
-    backdrop = backdrop?.previewUrl,
-    reviewCount = reviewInfo?.count,
-    isSeries = isSeries,
-)
+fun MovieDTO.toMovieDBO(): MovieRemoteDBO {
+
+    val movieDBO = MovieDBO(
+        id = id,
+        name = name,
+        year = year,
+        description = description,
+        rating = rating?.kp,
+        poster = poster?.previewUrl,
+        backdrop = backdrop?.previewUrl,
+        isSeries = isSeries,
+        typeId = 0,
+        ageRatingId = null,
+        networkId = null,
+    )
+
+    return MovieRemoteDBO(
+        movie = movieDBO,
+
+        type = TypeDBO(title = type),
+        ageRating = ageRating?.let { AgeRatingDBO(title = "$it+") },
+        network = networks?.let { NetworkDBO(title = it.items[0].name.toString()) },
+        countries = countries.map { CountryDBO(title = it.name) },
+        genres = genres.map { GenreDBO(title = it.name) },
+    )
+}

@@ -19,5 +19,5 @@ data class MovieDTO(
     @SerialName("isSeries") val isSeries: Boolean,
     @SerialName("genres") val genres: List<Genres> = listOf(),
     @SerialName("countries") val countries: List<Country> = listOf(),
-    @SerialName("networks") val networks: Networks? = Networks(),
+    @SerialName("networks") val networks: Networks? = null,
 )

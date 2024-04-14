@@ -5,6 +5,7 @@ import androidx.paging.PagingState
 import com.myaxa.data.mappers.toMovieDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
+import com.myaxa.movies_api.models.MovieDTO
 import com.myaxa.movies_catalog.filters.Filters
 import com.myaxa.movies_catalog.Movie
 import dagger.assisted.Assisted
@@ -55,8 +56,13 @@ class MoviesPagingSource @AssistedInject constructor(
             ageRatings = if (filters?.ageRatings?.isSelected == true) filters.ageRatings.selectedOptions() else null,
         )
 
-        val list = responseResult.getOrNull()?.movies?.map { it.toMovieDBO().toMovie() } ?: emptyList()
+        val remoteList = responseResult.getOrNull()?.movies
+        val list = responseResult.getOrNull()?.movies?.map { it.toMovie() } ?: emptyList()
         val pages = responseResult.getOrNull()?.pages ?: page
+
+        localDataSource.insertList(
+            remoteList?.map { it.toMovieDBO() } ?: emptyList()
+        )
 
         return LoadResult.Page(
             list,
@@ -65,13 +71,15 @@ class MoviesPagingSource @AssistedInject constructor(
         )
     }
 
+
+
     private suspend fun loadWithQuery(params: LoadParams<Int>, page: Int): LoadResult.Page<Int, Movie> {
         val responseResult = remoteDataSource.getMovies(query, page, params.loadSize)
 
         val list = responseResult.getOrNull()?.movies ?: emptyList()
         val pages = responseResult.getOrNull()?.pages ?: page
 
-        val filteredMovies = remoteDataSource.filterMoviesList(
+        val remoteList = remoteDataSource.filterMoviesList(
             ids = list.map { it.id },
             year = if (filters?.year?.isSelected == true) filters.year.toString() else null,
             rating = if (filters?.rating?.isSelected == true) filters.rating.toString() else null,
@@ -80,9 +88,15 @@ class MoviesPagingSource @AssistedInject constructor(
             networks = if (filters?.networks?.isSelected == true) filters.networks.selectedOptions() else null,
             genres = if (filters?.genres?.isSelected == true) filters.genres.selectedOptions() else null,
             ageRatings = if (filters?.ageRatings?.isSelected == true) filters.ageRatings.selectedOptions() else null,
-        ).getOrNull()?.let { response ->
-            response.movies.map { it.toMovieDBO().toMovie() }
+        ).getOrNull()?.movies
+
+        val filteredMovies = remoteList?.let { list ->
+            list.map { it.toMovie() }
         } ?: emptyList()
+
+        localDataSource.insertList(
+            remoteList?.map { it.toMovieDBO() } ?: emptyList()
+        )
 
         return LoadResult.Page(
             filteredMovies,

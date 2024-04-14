@@ -6,15 +6,11 @@ import com.myaxa.movies.database.models.MovieDBO
 fun MovieDBO.toMovieDetails() = MovieDetails(
     id = id,
     name = name,
-    type = type,
     year = year,
     rating = rating,
-    reviewCount = reviewCount,
-    ageRating = ageRating,
     poster = poster,
     backdrop = backdrop,
     description = description,
-    shortDescription = shortDescription,
     isSeries = isSeries,
     /*
     * // genres

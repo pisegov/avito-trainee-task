@@ -4,12 +4,12 @@ import com.myaxa.movies.database.models.AgeRatingDBO
 import com.myaxa.movies.database.models.CountryDBO
 import com.myaxa.movies.database.models.GenreDBO
 import com.myaxa.movies.database.models.MovieDBO
-import com.myaxa.movies.database.models.MovieRemoteDBO
+import com.myaxa.movies.database.models.MovieFullDBO
 import com.myaxa.movies.database.models.NetworkDBO
 import com.myaxa.movies.database.models.TypeDBO
 import com.myaxa.movies_api.models.MovieDTO
 
-fun MovieDTO.toMovieDBO(): MovieRemoteDBO {
+fun MovieDTO.toMovieRemoteDBO(): MovieFullDBO {
 
     val movieDBO = MovieDBO(
         id = id,
@@ -25,7 +25,7 @@ fun MovieDTO.toMovieDBO(): MovieRemoteDBO {
         networkId = null,
     )
 
-    return MovieRemoteDBO(
+    return MovieFullDBO(
         movie = movieDBO,
 
         type = TypeDBO(title = type),

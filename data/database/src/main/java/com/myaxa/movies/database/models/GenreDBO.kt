@@ -3,9 +3,13 @@ package com.myaxa.movies.database.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "genres")
+@Entity(
+    tableName = "genres",
+    indices = [Index(value = ["title"], unique = true)]
+)
 data class GenreDBO(
     @ColumnInfo("genre_id") @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo("title") val title: String,

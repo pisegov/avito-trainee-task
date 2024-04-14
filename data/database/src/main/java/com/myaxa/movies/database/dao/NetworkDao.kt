@@ -1,17 +1,11 @@
 package com.myaxa.movies.database.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Upsert
-import com.myaxa.movies.database.models.MovieDBO
-import com.myaxa.movies.database.models.MovieRemoteDBO
 import com.myaxa.movies.database.models.NetworkDBO
-import com.myaxa.movies.database.models.TypeDBO
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NetworkDao {

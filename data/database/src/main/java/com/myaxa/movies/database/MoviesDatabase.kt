@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.myaxa.movies.database.dao.AgeRatingDao
+import com.myaxa.movies.database.dao.GenreDao
 import com.myaxa.movies.database.dao.MoviesDao
 import com.myaxa.movies.database.dao.NetworkDao
 import com.myaxa.movies.database.dao.TypeDao
@@ -44,6 +45,7 @@ abstract class MoviesDatabase : RoomDatabase() {
     abstract val ageRatingDao: AgeRatingDao
     abstract val networkDao: NetworkDao
     abstract val typeDao: TypeDao
+    abstract val genreDao: GenreDao
 }
 
 class MoviesDatabaseModule(applicationContext: Context) {

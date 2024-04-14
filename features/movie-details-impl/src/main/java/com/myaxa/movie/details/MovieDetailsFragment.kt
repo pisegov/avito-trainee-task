@@ -100,6 +100,8 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
                 }
             }
 
+            genres.text = model.genres
+
             backButton.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }

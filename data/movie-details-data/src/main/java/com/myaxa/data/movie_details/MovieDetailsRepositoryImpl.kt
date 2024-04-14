@@ -2,7 +2,7 @@ package com.myaxa.data.movie_details
 
 import androidx.paging.PagingSource
 import com.myaxa.data.actors_remote.MovieDetailsInfoDataSource
-import com.myaxa.data.mappers.toMovieDBO
+import com.myaxa.data.mappers.toMovieRemoteDBO
 import com.myaxa.domain.movie_details.DetailsInfoModel
 import com.myaxa.domain.movie_details.MovieDetails
 import com.myaxa.domain.movie_details.MovieDetailsRepository
@@ -16,13 +16,15 @@ class MovieDetailsRepositoryImpl @Inject constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource,
     private val detailsRemoteDataSource: MovieDetailsInfoDataSource,
     private val localDataSource: MoviesLocalDataSource,
-): MovieDetailsRepository{
+) : MovieDetailsRepository {
 
-    override fun getMovieDetailsFlow(id: Long): Flow<MovieDetails?> = localDataSource.getMovie(id).map {
-        it?.toMovieDetails()
+    override fun getMovieDetailsFlow(id: Long): Flow<MovieDetails?> {
+        return localDataSource.getMovie(id).map {
+            it?.toMovieDetails()
+        }
     }
 
-    override fun <T: DetailsInfoModel> getInfo(movieId: Long, type: Class<T>): PagingSource<Int, T>  {
+    override fun <T : DetailsInfoModel> getInfo(movieId: Long, type: Class<T>): PagingSource<Int, T> {
         return MovieDetailsInfoPagingSource(movieId, type, detailsRemoteDataSource)
     }
 
@@ -31,7 +33,7 @@ class MovieDetailsRepositoryImpl @Inject constructor(
         when {
             result.isSuccess -> {
                 val movie = result.getOrThrow()
-                localDataSource.insertMovie(movie.toMovieDBO())
+                localDataSource.insertMovie(movie.toMovieRemoteDBO())
             }
         }
     }

@@ -43,13 +43,27 @@ data class MovieDBO(
     @ColumnInfo("network_id") val networkId: Long?,
 )
 
-data class MovieRemoteDBO(
+data class MovieFullDBO(
     @Embedded val movie: MovieDBO,
-
+    @Relation(
+        parentColumn = "type_id",
+        entity = TypeDBO::class,
+        entityColumn = "type_id",
+    )
     val type: TypeDBO,
 
+    @Relation(
+        parentColumn = "age_rating_id",
+        entity = AgeRatingDBO::class,
+        entityColumn = "age_rating_id",
+    )
     val ageRating: AgeRatingDBO?,
 
+    @Relation(
+        parentColumn = "network_id",
+        entity = NetworkDBO::class,
+        entityColumn = "network_id",
+    )
     val network: NetworkDBO?,
 
     @Relation(

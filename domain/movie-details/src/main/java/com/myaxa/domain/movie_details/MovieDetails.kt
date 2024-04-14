@@ -11,4 +11,5 @@ data class MovieDetails (
     val backdrop: String? = null,
     val description: String? = null,
     val isSeries: Boolean,
+    val genres: String,
 )

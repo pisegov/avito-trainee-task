@@ -2,7 +2,7 @@ package com.myaxa.movies_data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.myaxa.data.mappers.toMovieDBO
+import com.myaxa.data.mappers.toMovieRemoteDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
 import com.myaxa.movies_catalog.Movie
@@ -60,7 +60,7 @@ class MoviesPagingSource @AssistedInject constructor(
         val pages = responseResult.getOrNull()?.pages ?: page
 
         localDataSource.insertList(
-            remoteList?.map { it.toMovieDBO() } ?: emptyList()
+            remoteList?.map { it.toMovieRemoteDBO() } ?: emptyList()
         )
 
         return LoadResult.Page(
@@ -92,7 +92,7 @@ class MoviesPagingSource @AssistedInject constructor(
         } ?: emptyList()
 
         localDataSource.insertList(
-            remoteList?.map { it.toMovieDBO() } ?: emptyList()
+            remoteList?.map { it.toMovieRemoteDBO() } ?: emptyList()
         )
 
         return LoadResult.Page(

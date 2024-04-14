@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:maxLines="2"
+            android:ellipsize="end"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             tools:text="18 января 2022"
             app:layout_constraintStart_toStartOf="@id/author"
             app:layout_constraintTop_toBottomOf="@id/author" />
@@ -43,7 +46,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
+            android:paddingEnd="32dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:layout_marginTop="4dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/author"

@@ -6,7 +6,7 @@
             <size
                 android:width="433px"
                 android:height="618px" />
-            <solid android:color="@color/cardview_light_background" />
+            <solid android:color="?attr/colorPrimaryContainer" />
         </shape>
     </item>
 

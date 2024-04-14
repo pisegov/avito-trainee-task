@@ -21,7 +21,6 @@ import com.myaxa.movie.details.models.MovieDetailsUI
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
-import kotlin.math.roundToInt
 import com.myaxa.movies.common.R as CommonR
 
 internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
@@ -91,14 +90,13 @@ internal class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) 
                 )
             }
             collapsingToolbar.title = model.name
-            tvReviewsNumber.text = model.reviewCount?.let { "$it отзывов" }
 
             model.rating?.let { rating ->
                 val nf = NumberFormat.getNumberInstance()
                 nf.setMaximumFractionDigits(1)
                 ratingValue.text = nf.format(rating)
                 listOf(star1, star2, star3, star4, star5).forEachIndexed { index, star ->
-                    star.isEnabled = index < (rating.roundToInt() / 2)
+                    star.isEnabled = (index + 1) < ((rating + 1) / 2)
                 }
             }
 

@@ -5,9 +5,8 @@ import androidx.paging.PagingState
 import com.myaxa.data.mappers.toMovieDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
-import com.myaxa.movies_api.models.MovieDTO
-import com.myaxa.movies_catalog.filters.Filters
 import com.myaxa.movies_catalog.Movie
+import com.myaxa.movies_catalog.filters.Filters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -70,8 +69,6 @@ class MoviesPagingSource @AssistedInject constructor(
             nextKey = (page + 1).takeIf { page < pages },
         )
     }
-
-
 
     private suspend fun loadWithQuery(params: LoadParams<Int>, page: Int): LoadResult.Page<Int, Movie> {
         val responseResult = remoteDataSource.getMovies(query, page, params.loadSize)

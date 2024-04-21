@@ -10,7 +10,7 @@ import com.myaxa.domain.movie_details.MovieDetailsRepository
 import com.myaxa.movies.database.MoviesDatabaseModule
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
-import com.myaxa.movies_catalog.MoviesRepository
+import com.myaxa.movie_catalog_impl.MoviesRepository
 import com.myaxa.movies_data.MoviesRepositoryImpl
 import com.myaxa.network.RetrofitModule
 import dagger.Binds

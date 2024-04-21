@@ -3,7 +3,8 @@ package com.myaxa.avito_kinopoisk_test.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.myaxa.movie.details.MovieDetailsViewModel
-import com.myaxa.movies_catalog.MoviesCatalogViewModel
+import com.myaxa.movie_catalog_api.MovieCatalogViewModel
+import com.myaxa.movie_catalog_impl.MovieCatalogViewModelImpl
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -31,9 +32,12 @@ internal interface ViewModelModule {
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
+    fun movieCatalogViewModelImpl(impl: MovieCatalogViewModelImpl): MovieCatalogViewModel
+
+    @Binds
     @IntoMap
-    @ViewModelKey(MoviesCatalogViewModel::class)
-    fun moviesCatalogViewModel(viewModel: MoviesCatalogViewModel): ViewModel
+    @ViewModelKey(MovieCatalogViewModel::class)
+    fun moviesCatalogViewModel(viewModel: MovieCatalogViewModel): ViewModel
 
     @Binds
     @IntoMap

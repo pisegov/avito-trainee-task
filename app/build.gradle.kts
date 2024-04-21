@@ -62,9 +62,14 @@ dependencies {
 
     implementation(project(":common"))
 
-    implementation(project(":features:movies-catalog"))
+    implementation(project(":features:movie-catalog-api"))
+    implementation(project(":features:movie-catalog-impl"))
+
     implementation(project(":features:movie-details-api"))
     implementation(project(":features:movie-details-impl"))
+
+    implementation(project(":features:filters-bottomsheet-api"))
+    implementation(project(":features:filters-bottomsheet-impl"))
 
     implementation(project(":domain:movies-catalog"))
     implementation(project(":domain:movie-details"))

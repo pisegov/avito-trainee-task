@@ -6,8 +6,8 @@ import com.myaxa.data.mappers.toMovie
 import com.myaxa.data.mappers.toMovieFullDBO
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
-import com.myaxa.movies_catalog.Movie
-import com.myaxa.movies_catalog.filters.Filters
+import com.myaxa.movie_catalog_impl.Movie
+import com.myaxa.movie_catalog_impl.filters.Filters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

@@ -24,9 +24,12 @@ rootProject.name = "Avito-kinopoisk-test"
 include(":app")
 include(":common")
 
-include(":features:movies-catalog")
+include(":features:movie-catalog-api")
+include(":features:movie-catalog-impl")
 include(":features:movie-details-api")
 include(":features:movie-details-impl")
+include(":features:filters-bottomsheet-api")
+include(":features:filters-bottomsheet-impl")
 
 include(":domain:movies-catalog")
 include(":domain:movie-details")

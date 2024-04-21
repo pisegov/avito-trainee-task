@@ -9,7 +9,7 @@ import com.myaxa.movies.database.models.MovieFullDBO
 import com.myaxa.movies.database.models.NetworkDBO
 import com.myaxa.movies.database.models.TypeDBO
 import com.myaxa.movies_api.models.MovieDTO
-import com.myaxa.movies_catalog.Movie
+import com.myaxa.movie_catalog_impl.Movie
 
 /*
 * Общий маппер для модулей movies-data и movie-details-data

@@ -2,12 +2,12 @@ package com.myaxa.movies_data
 
 import androidx.paging.PagingSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
-import com.myaxa.movies_catalog.Movie
-import com.myaxa.movies_catalog.MoviesRepository
-import com.myaxa.movies_catalog.filters.Filter.ListFilter
-import com.myaxa.movies_catalog.filters.FilterValue
-import com.myaxa.movies_catalog.filters.Filters
-import com.myaxa.movies_catalog.filters.contentTypeNames
+import com.myaxa.movie_catalog_impl.Movie
+import com.myaxa.movie_catalog_impl.MoviesRepository
+import com.myaxa.movie_catalog_impl.filters.Filter.ListFilter
+import com.myaxa.movie_catalog_impl.filters.FilterValue
+import com.myaxa.movie_catalog_impl.filters.Filters
+import com.myaxa.movie_catalog_impl.filters.contentTypeNames
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

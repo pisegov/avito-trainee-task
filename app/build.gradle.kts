@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
+    implementation(libs.leakcanary)
+
     implementation(project(":common"))
 
     implementation(project(":features:movies-catalog"))

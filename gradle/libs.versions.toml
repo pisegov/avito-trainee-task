@@ -28,6 +28,7 @@ okHttpLoggingInterceptor = "4.12.0"
 kotlinxSerialization = "1.6.3"
 kotlinxSerializationPlugin = "1.9.22"
 coil = "2.6.0"
+leakcanary = "2.14"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +74,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
+leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary"}
 
 [bundles]
 room = ["androidx-room", "androidx-room-ktx", "androidx-room-paging"]

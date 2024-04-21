@@ -1,27 +1,35 @@
 package com.myaxa.movies_catalog.ui.filters.bottomsheet
 
+import android.app.Dialog
 import android.content.Context
-import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.myaxa.movies.common.dpToPx
 import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.R
 import com.myaxa.movies_catalog.databinding.BottomsheetFiltersBinding
+import com.myaxa.movies_catalog.databinding.BottomsheetStickyButtonsBinding
 import com.myaxa.movies_catalog.di.MoviesCatalogDependenciesProvider
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers.FiltersEpoxyController
+import com.myaxa.movies_catalog.util.addKeyboardListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
+internal class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
     private val binding by viewBinding(BottomsheetFiltersBinding::bind)
+
+    private var buttonsBinding: BottomsheetStickyButtonsBinding? = null
 
     private val viewModelFactory
         get() = (requireActivity().application as MoviesCatalogDependenciesProvider)
@@ -51,15 +59,15 @@ class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
     ): View? = inflater.inflate(R.layout.bottomsheet_filters, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        buttonsBinding = BottomsheetStickyButtonsBinding.inflate(LayoutInflater.from(requireContext()))
 
-        BottomSheetBehavior.from(binding.bottomsheet).apply {
-            state = STATE_EXPANDED
-        }
-
-        binding.bottomsheet.minimumHeight = Resources.getSystem().displayMetrics.heightPixels
         binding.filters.setController(filtersEpoxyController)
-        binding.filters.isNestedScrollingEnabled = false
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.root.addKeyboardListener {
+                buttonsBinding?.root?.isVisible = !it
+            }
+        }
 
         lifecycleScope.launch {
             viewModel.filtersFlow.collectLatest {
@@ -71,8 +79,58 @@ class FiltersBottomSheetFragment : BottomSheetDialogFragment() {
 
         lifecycleScope.launch {
             filtersEpoxyController.filtersFlow.collect {
-                viewModel.updateFilters(filtersEpoxyController.filtersFlow.value)
+                buttonsBinding?.cancelButton?.isVisible = it?.isSelected == true
             }
         }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val bottomSheetDialog = super.onCreateDialog(savedInstanceState)
+
+        bottomSheetDialog.setOnShowListener {
+            buttonsBinding?.run {
+                val containerLayout = dialog?.findViewById<FrameLayout>(
+                    com.google.android.material.R.id.container
+                )
+
+                val layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM
+                )
+
+                containerLayout?.addView(
+                    root,
+                    layoutParams
+                )
+
+                root.viewTreeObserver?.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        root.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+
+                        val height = root.measuredHeight
+                        binding.root.setPadding(0, 0, 0, height + 8.dpToPx())
+                    }
+                })
+
+                okButton.setOnClickListener {
+                    viewModel.updateFilters(filtersEpoxyController.filtersFlow.value)
+                    dismiss()
+                }
+
+                cancelButton.isSelected = false
+                cancelButton.setOnClickListener {
+                    filtersEpoxyController.clearFilters()
+                    viewModel.updateFilters(filtersEpoxyController.filtersFlow.value)
+                }
+            }
+        }
+
+        return bottomSheetDialog
+    }
+
+    override fun onDestroy() {
+        buttonsBinding = null
+        super.onDestroy()
     }
 }

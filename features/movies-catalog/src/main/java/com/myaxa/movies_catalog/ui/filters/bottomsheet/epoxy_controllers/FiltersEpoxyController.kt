@@ -2,9 +2,9 @@ package com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_controllers
 
 import com.airbnb.epoxy.EpoxyController
 import com.myaxa.movies_catalog.filters.Filters
-import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.YearFilterEpoxyModel
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.ListFilterEpoxyModel
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.RatingFilterEpoxyModel
+import com.myaxa.movies_catalog.ui.filters.bottomsheet.epoxy_models.YearFilterEpoxyModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -42,36 +42,41 @@ class FiltersEpoxyController @Inject constructor(
         requestModelBuild()
     }
 
+    fun clearFilters() {
+        _filtersFlow.update { it?.clearedCopy() }
+        requestModelBuild()
+    }
+
     override fun buildModels() {
-        filtersFlow.value?.let {
-            YearFilterEpoxyModel(it.year) { filter ->
+        filtersFlow.value?.let { filters ->
+            YearFilterEpoxyModel(filters.year) { filter ->
                 _filtersFlow.update { it?.copy(year = filter) }
             }.id("year_filter").addTo(this)
 
-            RatingFilterEpoxyModel(it.rating) { filter ->
+            RatingFilterEpoxyModel(filters.rating) { filter ->
                 _filtersFlow.update { it?.copy(rating = filter) }
             }
                 .id("rating_filter")
                 .addTo(this)
 
-            typesEpoxyController.filter = it.types
-            ListFilterEpoxyModel(it.types.title, typesEpoxyController, 1)
+            typesEpoxyController.filter = filters.types
+            ListFilterEpoxyModel(filters.types.title, typesEpoxyController, 1)
                 .id("types_filter").addTo(this)
 
-            countriesEpoxyController.filter = it.countries
-            ListFilterEpoxyModel(it.countries.title, countriesEpoxyController, 1)
+            countriesEpoxyController.filter = filters.countries
+            ListFilterEpoxyModel(filters.countries.title, countriesEpoxyController, 3)
                 .id("countries_filter").addTo(this)
 
-            networksEpoxyController.filter = it.networks
-            ListFilterEpoxyModel(it.networks.title, networksEpoxyController, 1)
+            networksEpoxyController.filter = filters.networks
+            ListFilterEpoxyModel(filters.networks.title, networksEpoxyController, 1)
                 .id("networks_filter").addTo(this)
 
-            genresEpoxyController.filter = it.genres
-            ListFilterEpoxyModel(it.genres.title, genresEpoxyController, 1)
+            genresEpoxyController.filter = filters.genres
+            ListFilterEpoxyModel(filters.genres.title, genresEpoxyController, 2)
                 .id("genres_filter").addTo(this)
 
-            ageRatingsEpoxyController.filter = it.ageRatings
-            ListFilterEpoxyModel(it.ageRatings.title, ageRatingsEpoxyController, 1)
+            ageRatingsEpoxyController.filter = filters.ageRatings
+            ListFilterEpoxyModel(filters.ageRatings.title, ageRatingsEpoxyController, 1)
                 .id("age_ratings_filter").addTo(this)
         }
     }

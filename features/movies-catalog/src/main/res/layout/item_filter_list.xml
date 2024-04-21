@@ -23,6 +23,7 @@
 
 
         <com.airbnb.epoxy.EpoxyRecyclerView
+            android:nestedScrollingEnabled="false"
             android:id="@+id/list"
             app:itemSpacing="8dp"
             android:clipToPadding="false"

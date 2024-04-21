@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_hint">Поиск…</string>
-    <string name="couldnt_load_data">Не удалось загрузить данные :(</string>
+    <string name="data_is_empty">Список пуст</string>
     <string name="accept_filters_selection">Применить</string>
     <string name="cancel_filters_selection">Очистить</string>
 </resources>

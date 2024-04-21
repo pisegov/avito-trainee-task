@@ -77,7 +77,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/couldnt_load_data"
+        android:text="@string/data_is_empty"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:visibility="gone" />

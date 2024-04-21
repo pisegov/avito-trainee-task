@@ -1,8 +1,7 @@
 package com.myaxa.movies_catalog.ui
 
 import android.widget.EditText
-import android.widget.ImageView
-import androidx.appcompat.R
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -11,8 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.search.SearchBar
-import com.google.android.material.search.SearchView
 import com.myaxa.movie.details.api.MovieDetailsApi
 import com.myaxa.movies.common.Navigator
 import com.myaxa.movies.common.setOnTextChangeListener
@@ -20,7 +17,6 @@ import com.myaxa.movies_catalog.MoviesCatalogViewModel
 import com.myaxa.movies_catalog.databinding.FragmentMoviesCatalogBinding
 import com.myaxa.movies_catalog.ui.filters.bottomsheet.FiltersBottomSheetFragment
 import com.myaxa.movies_catalog.ui.filters.selected_filters.SelectedFiltersEpoxyController
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +29,7 @@ class MoviesCatalogViewController @Inject constructor(
     private val movieDetailsApi: MovieDetailsApi,
     private val navigator: Navigator,
 ) {
+    private var isRefreshing = false
 
     private val catalogEpoxyController: MoviesEpoxyController = catalogEpoxyControllerFactory.create {
         navigator.navigateToFragment(fragment.parentFragmentManager, movieDetailsApi.provideMovieDetails(it))
@@ -40,52 +37,33 @@ class MoviesCatalogViewController @Inject constructor(
 
     fun setupViews(binding: FragmentMoviesCatalogBinding) = with(binding) {
 
-        setupCatalog(catalog)
+        setupCatalog(catalog, noDataText)
 
-        setupFilterCardsList(filters, btnFilters)
+        setupFilters(filters, btnFilters)
 
         setupSearchBar(searchBar)
+
+        setupObservers(binding)
     }
 
-    fun setupObservers(binding: FragmentMoviesCatalogBinding) {
-        lifecycleScope.launch {
-            viewModel.catalogFlow.collectLatest {
-                catalogEpoxyController.submitData(it)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.filtersFlow.collect {
-                filtersEpoxyController.filters = it
-                binding.filters.isVisible = it?.isSelected == true
-            }
-        }
-
-        lifecycleScope.launch {
-            catalogEpoxyController.loadStateFlow.collect {
-                val isDataEmpty = catalogEpoxyController.adapter.itemCount == 0
-                val isNothingLoaded = isDataEmpty && (it.refresh != LoadState.Loading)
-
-                binding.noDataText.isVisible = isNothingLoaded
-                binding.catalog.isVisible = !isDataEmpty
-                binding.progress.isVisible = it.refresh == LoadState.Loading
-            }
-        }
-    }
-
-    private fun setupCatalog(catalog: EpoxyRecyclerView) {
+    private fun setupCatalog(catalog: EpoxyRecyclerView, noDataTextView: TextView) {
         catalog.apply {
+
+            catalogEpoxyController.adapter.stateRestorationPolicy =
+                RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            catalogEpoxyController.addInterceptor(
+                CheckIfListIsEmptyInterceptor { noDataTextView.isVisible = it && !isRefreshing }
+            )
+            setController(catalogEpoxyController)
+
             val layoutManager = GridLayoutManager(
                 fragment.requireContext(),
                 2,
                 GridLayoutManager.VERTICAL,
                 false
             )
-
-            catalogEpoxyController.adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-
-            setController(catalogEpoxyController)
             setLayoutManager(layoutManager)
+
         }
     }
 
@@ -102,6 +80,31 @@ class MoviesCatalogViewController @Inject constructor(
         searchBar.setOnTextChangeListener {
             val text = it.toString()
             viewModel.updateSearchQuery(text)
+        }
+    }
+
+    private fun setupObservers(binding: FragmentMoviesCatalogBinding) {
+        lifecycleScope.launch {
+            viewModel.catalogFlow.collect {
+                catalogEpoxyController.submitData(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.filtersFlow.collect {
+                filtersEpoxyController.filters = it
+                binding.filters.isVisible = it?.isSelected == true
+            }
+        }
+
+        lifecycleScope.launch {
+            catalogEpoxyController.loadStateFlow.collect {
+                isRefreshing = it.refresh == LoadState.Loading
+                binding.progress.isVisible = isRefreshing
+                if (isRefreshing) {
+                    binding.noDataText.isVisible = false
+                }
+            }
         }
     }
 }

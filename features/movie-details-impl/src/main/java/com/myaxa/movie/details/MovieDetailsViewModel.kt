@@ -44,13 +44,13 @@ class MovieDetailsViewModel @Inject constructor(
         it?.toMovieDetailsUI()
     }
 
-    val actorsFlow: Flow<PagingData<ActorUI>> = additionalListFlow(Actor::class.java) as Flow<PagingData<ActorUI>>
+    val actorsFlow: Flow<PagingData<ActorUI>> = additionalListFlow<Actor>() as Flow<PagingData<ActorUI>>
 
-    val reviewsFlow = additionalListFlow(Review::class.java, 3) as Flow<PagingData<ReviewUI>>
+    val reviewsFlow = additionalListFlow<Review>(3) as Flow<PagingData<ReviewUI>>
 
-    val imagesFlow = additionalListFlow(Image::class.java, 3) as Flow<PagingData<ImageUI>>
+    val imagesFlow = additionalListFlow<Image>(3) as Flow<PagingData<ImageUI>>
 
-    val episodesFlow = additionalListFlow(Episode::class.java, 2) as Flow<PagingData<EpisodeUI>>
+    val episodesFlow = additionalListFlow<Episode>(2) as Flow<PagingData<EpisodeUI>>
 
     internal fun loadMovie(id: Long) {
         viewModelScope.launch {
@@ -60,23 +60,21 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private fun <T : DetailsInfoModel> additionalListFlow(
-        type: Class<T>,
+    private inline fun <reified T : DetailsInfoModel> additionalListFlow(
         pageSize: Int = 10,
     ): Flow<PagingData<AdditionalListItem>> {
         return _movieFlow
             .map { id ->
-                newPager(id, type, pageSize)
+                newPager<T>(id, pageSize)
             }
             .flatMapLatest { pager ->
-                pager.flow.map { pagingData -> pagingData.map { map(it, type) } }
+                pager.flow.map { pagingData -> pagingData.map { mapDomainToUIModel<T>(it) } }
             }
             .cachedIn(viewModelScope)
     }
 
-    private fun <T : DetailsInfoModel> newPager(
+    private inline fun <reified T : DetailsInfoModel> newPager(
         id: Long,
-        type: Class<T>,
         pageSize: Int = 10,
     ): Pager<Int, T> {
         return Pager(
@@ -87,12 +85,12 @@ class MovieDetailsViewModel @Inject constructor(
                 initialLoadSize = pageSize
             )
         ) {
-            repository.getInfo(id, type)
+            repository.getInfo(id, T::class.java)
         }
     }
 
-    private fun <T : DetailsInfoModel> map(item: DetailsInfoModel, type: Class<T>): AdditionalListItem {
-        return when (type) {
+    private inline fun <reified T : DetailsInfoModel> mapDomainToUIModel(item: DetailsInfoModel): AdditionalListItem {
+        return when (T::class.java) {
 
             Actor::class.java -> {
                 (item as Actor).toActorUI()

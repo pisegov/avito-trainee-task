@@ -11,32 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.myaxa.filters_bottomsheet_api.FiltersBottomSheetApi
-import com.myaxa.movie.details.api.MovieDetailsApi
 import com.myaxa.movie_catalog_api.MovieCatalogViewModel
 import com.myaxa.movie_catalog_impl.databinding.FragmentMovieCatalogBinding
 import com.myaxa.movie_catalog_impl.ui.filters.SelectedFiltersEpoxyController
-import com.myaxa.movies.common.Navigator
 import com.myaxa.movies.common.setOnTextChangeListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class MovieCatalogViewController @Inject constructor(
     private val fragment: Fragment,
-    catalogEpoxyControllerFactory: MoviesEpoxyController.Factory,
+    private val binding: FragmentMovieCatalogBinding,
+    private val catalogEpoxyController: MovieCatalogEpoxyController,
     private val filtersEpoxyController: SelectedFiltersEpoxyController,
     private val viewModel: MovieCatalogViewModel,
     private val lifecycleScope: LifecycleCoroutineScope,
-    private val movieDetailsApi: MovieDetailsApi,
     private val filtersBottomSheetApi: FiltersBottomSheetApi,
-    private val navigator: Navigator,
 ) {
     private var isRefreshing = false
 
-    private val catalogEpoxyController: MoviesEpoxyController = catalogEpoxyControllerFactory.create {
-        navigator.navigateToFragment(fragment.parentFragmentManager, movieDetailsApi.provideMovieDetails(it))
-    }
-
-    fun setupViews(binding: FragmentMovieCatalogBinding) = with(binding) {
+    fun setupViews() = with(binding) {
 
         setupCatalog(catalog, noDataText)
 
@@ -44,7 +37,7 @@ internal class MovieCatalogViewController @Inject constructor(
 
         setupSearchBar(searchBar)
 
-        setupObservers(binding)
+        setupObservers()
     }
 
     private fun setupCatalog(catalog: EpoxyRecyclerView, noDataTextView: TextView) {
@@ -84,7 +77,7 @@ internal class MovieCatalogViewController @Inject constructor(
         }
     }
 
-    private fun setupObservers(binding: FragmentMovieCatalogBinding) {
+    private fun setupObservers() {
         lifecycleScope.launch {
             viewModel.catalogFlow.collect {
                 catalogEpoxyController.submitData(it)

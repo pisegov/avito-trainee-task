@@ -1,14 +1,14 @@
 package com.myaxa.movie_catalog_impl.ui.filters
 
 import com.airbnb.epoxy.EpoxyController
+import com.myaxa.movie_catalog_api.FiltersStateHolder
 import com.myaxa.movie_catalog_impl.filters.Filter
 import com.myaxa.movie_catalog_impl.filters.FilterValue
 import com.myaxa.movie_catalog_impl.filters.Filters
-import com.myaxa.movie_catalog_api.MovieCatalogViewModel
 import javax.inject.Inject
 
 internal class SelectedFiltersEpoxyController @Inject constructor(
-    private val viewModel: MovieCatalogViewModel,
+    private val filtersStateHolder: FiltersStateHolder,
 ) : EpoxyController() {
 
     var filters: Filters? = null
@@ -67,7 +67,7 @@ internal class SelectedFiltersEpoxyController @Inject constructor(
                 }
 
                 updatedFilter?.let {
-                    viewModel.updateFilters(filters?.copyWithReplacedFilter(type = card.type, filter = updatedFilter))
+                    filtersStateHolder.updateFilters(filters?.copyWithReplacedFilter(type = card.type, filter = updatedFilter))
                 }
             }
                 .id("filter_${card}")

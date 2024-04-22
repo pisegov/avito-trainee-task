@@ -16,3 +16,6 @@ fun EditText.setOnTextChangeListener(block: (Editable?) -> Unit) {
 fun Int.dpToPx(): Int {
     return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
+
+fun <T> unsafeLazy (initializer: () -> T) : Lazy<T> =
+    lazy(LazyThreadSafetyMode.NONE, initializer)

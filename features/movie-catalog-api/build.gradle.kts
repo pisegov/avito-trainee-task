@@ -31,9 +31,9 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.paging)
+
     implementation(project(":domain:movies-catalog"))
     implementation(project(":common"))
 

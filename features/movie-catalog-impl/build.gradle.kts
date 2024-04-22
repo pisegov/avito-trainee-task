@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.material)
 
-    implementation(libs.viewbindingpropertydelegate)
     implementation(libs.androidx.lifecycle.viewmodel)
 
     implementation(libs.androidx.paging)

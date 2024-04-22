@@ -9,6 +9,8 @@ import com.myaxa.movie.details.api.MovieDetailsApi
 import com.myaxa.movie.details.api.MovieDetailsApiProvider
 import com.myaxa.movie.details.api.MovieDetailsDependencies
 import com.myaxa.movie.details.api.MovieDetailsDependenciesProvider
+import com.myaxa.movie_catalog_api.MovieCatalogApi
+import com.myaxa.movie_catalog_api.MovieCatalogApiProvider
 import com.myaxa.movie_catalog_api.MovieCatalogDependencies
 import com.myaxa.movie_catalog_api.MovieCatalogDependenciesProvider
 
@@ -16,11 +18,15 @@ internal class MoviesApplication :
     Application(),
     MovieCatalogDependenciesProvider,
     MovieDetailsDependenciesProvider,
+    MovieCatalogApiProvider,
     MovieDetailsApiProvider,
     FiltersBottomSheetApiProvider {
 
     private val applicationComponent: ApplicationComponent by lazy { DaggerApplicationComponent.factory().create(this) }
 
+    override fun provideMovieCatalogApi(): MovieCatalogApi {
+        return applicationComponent.movieCatalogApi
+    }
     override fun provideMovieCatalogDependencies(): MovieCatalogDependencies {
         return applicationComponent
     }

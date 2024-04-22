@@ -5,7 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.myaxa.movie_catalog_impl.ui.MovieCatalogFragment
+import com.myaxa.movie_catalog_api.MovieCatalogApiProvider
 
 internal class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,10 +18,14 @@ internal class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val movieCatalogFragment = (application as MovieCatalogApiProvider)
+            .provideMovieCatalogApi()
+            .provideMovieCatalog()
+
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.main, MovieCatalogFragment::class.java, null)
+                .add(R.id.main, movieCatalogFragment, null)
                 .commit()
         }
     }

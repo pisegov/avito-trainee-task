@@ -1,8 +1,8 @@
 package com.myaxa.movie.details.models
 
 /*
-* Интерфейс для UI моделей дополнительных деталей фильма
-* Нужен для обобщения логики пагинации в списках
+* Interface for additional movie details UI models
+* It is needed to generalize the logic of pagination in lists
 * */
-sealed interface AdditionalListItem
+internal sealed interface AdditionalListItem
 

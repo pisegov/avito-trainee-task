@@ -1,24 +1,29 @@
-package com.myaxa.movie.details.details_items
+package com.myaxa.movie.details.epoxy
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.myaxa.movie.details.impl.R
 import com.myaxa.movie.details.impl.databinding.ItemCardsListBinding
+import com.myaxa.movie.details.models.AdditionalListConfig
 import com.myaxa.movies.common.ViewBindingKotlinModel
 
 /*
-* Общий контроллер для списков отзывов, изображений и эпизодов
+ * A common model for lists of reviews, images and episodes
 * */
 internal data class CardsListEpoxyModel(
-    private val controller: PagingDataEpoxyController<*>,
-    private val titleText: String,
+    private val config: AdditionalListConfig,
 ) : ViewBindingKotlinModel<ItemCardsListBinding>(R.layout.item_cards_list) {
 
+    init {
+        id(config.id)
+    }
+
     override fun ItemCardsListBinding.bind() {
-        title.text = titleText
+        title.text = config.titleText
         val context = this.root.context
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        list.setController(controller)
+
         list.layoutManager = layoutManager
+        list.setController(config.controller)
+        list.setRecycledViewPool(config.recycledViewPool)
     }
 }

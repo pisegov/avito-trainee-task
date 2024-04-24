@@ -2,7 +2,7 @@ package com.myaxa.movie.details.models
 
 import com.myaxa.domain.movie_details.Episode
 
-data class EpisodeUI(
+internal data class EpisodeUI(
     val seasonNumber: Int,
     val episodeNumber: Int,
     val title: String,
@@ -10,7 +10,7 @@ data class EpisodeUI(
     val image: String? = null,
 ): AdditionalListItem
 
-fun Episode.toEpisodeUI() = EpisodeUI(
+internal fun Episode.toEpisodeUI() = EpisodeUI(
     seasonNumber = seasonNumber,
     episodeNumber = episodeNumber,
     title = title,

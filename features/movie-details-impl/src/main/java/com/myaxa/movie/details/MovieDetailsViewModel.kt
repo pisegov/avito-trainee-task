@@ -44,13 +44,13 @@ class MovieDetailsViewModel @Inject constructor(
         it?.toMovieDetailsUI()
     }
 
-    val actorsFlow: Flow<PagingData<ActorUI>> = additionalListFlow<Actor>() as Flow<PagingData<ActorUI>>
+    internal val actorsFlow: Flow<PagingData<ActorUI>> = additionalListFlow<Actor>() as Flow<PagingData<ActorUI>>
 
-    val reviewsFlow = additionalListFlow<Review>(3) as Flow<PagingData<ReviewUI>>
+    internal val reviewsFlow = additionalListFlow<Review>(3) as Flow<PagingData<ReviewUI>>
 
-    val imagesFlow = additionalListFlow<Image>(3) as Flow<PagingData<ImageUI>>
+    internal val imagesFlow = additionalListFlow<Image>(3) as Flow<PagingData<ImageUI>>
 
-    val episodesFlow = additionalListFlow<Episode>(2) as Flow<PagingData<EpisodeUI>>
+    internal val episodesFlow = additionalListFlow<Episode>(2) as Flow<PagingData<EpisodeUI>>
 
     internal fun loadMovie(id: Long) {
         viewModelScope.launch {

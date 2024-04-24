@@ -4,7 +4,7 @@ import com.myaxa.domain.movie_details.Review
 import com.myaxa.domain.movie_details.ReviewType
 import com.myaxa.movie.details.impl.R
 
-data class ReviewUI(
+internal data class ReviewUI(
     val id: Long,
     val movieId: Long,
     val author: String,
@@ -14,7 +14,7 @@ data class ReviewUI(
     val date: String,
 ) : AdditionalListItem
 
-fun Review.toReviewUI() = ReviewUI(
+internal fun Review.toReviewUI() = ReviewUI(
     id = id,
     movieId = movieId,
     author = author,
@@ -24,13 +24,13 @@ fun Review.toReviewUI() = ReviewUI(
     date = date,
 )
 
-enum class ReviewTypeUI(val attr: Int) {
+internal enum class ReviewTypeUI(val attr: Int) {
     POSITIVE(R.color.holo_green_dark),
     NEUTRAL(R.color.dark_grey),
     NEGATIVE(R.color.holo_red_dark),
 }
 
-fun ReviewType.toReviewTypeUI() =
+internal fun ReviewType.toReviewTypeUI() =
     when (this) {
         ReviewType.POSITIVE -> ReviewTypeUI.POSITIVE
         ReviewType.NEUTRAL -> ReviewTypeUI.NEUTRAL

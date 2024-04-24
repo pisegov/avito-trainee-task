@@ -1,4 +1,4 @@
-package com.myaxa.movie.details.details_items
+package com.myaxa.movie.details.epoxy
 
 import coil.load
 import com.airbnb.epoxy.EpoxyModel

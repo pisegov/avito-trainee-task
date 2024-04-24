@@ -149,7 +149,7 @@
         android:id="@+id/detailsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginVertical="12dp"
+        android:paddingTop="12dp"
         app:itemSpacing="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

@@ -1,25 +1,32 @@
 package com.myaxa.movie.details
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.paging.LoadState
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyModel
-import com.myaxa.movie.details.details_items.ActorsEpoxyController
-import com.myaxa.movie.details.details_items.ActorsListEpoxyModel
-import com.myaxa.movie.details.details_items.CardsListEpoxyModel
-import com.myaxa.movie.details.details_items.DescriptionEpoxyModel
-import com.myaxa.movie.details.details_items.EpisodesEpoxyController
-import com.myaxa.movie.details.details_items.ImagesEpoxyController
-import com.myaxa.movie.details.details_items.ProgressEpoxyModel
-import com.myaxa.movie.details.details_items.ReviewsEpoxyController
-import com.myaxa.movie.details.details_items.PlaceholderEpoxyModel
+import com.myaxa.movie.details.di.MovieDetailsFragmentScope
+import com.myaxa.movie.details.epoxy.ActorsListEpoxyModel
+import com.myaxa.movie.details.epoxy.CardsListEpoxyModel
+import com.myaxa.movie.details.epoxy.DescriptionEpoxyModel
+import com.myaxa.movie.details.epoxy.PlaceholderEpoxyModel
+import com.myaxa.movie.details.epoxy.ProgressEpoxyModel
+import com.myaxa.movie.details.models.AdditionalListConfig
+import com.myaxa.movie.details.models.AdditionalListConfig.ActorsListConfig
+import com.myaxa.movie.details.models.AdditionalListConfig.EpisodeListConfig
+import com.myaxa.movie.details.models.AdditionalListConfig.ImagesListConfig
+import com.myaxa.movie.details.models.AdditionalListConfig.ReviewsListConfig
+import com.myaxa.movie.details.models.DetailsItemConfig
+import com.myaxa.movie.details.models.DetailsItemConfig.DescriptionConfig
 import com.myaxa.movie.details.models.MovieDetailsUI
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@MovieDetailsFragmentScope
 internal class DetailsEpoxyController @Inject constructor(
-    val actorsEpoxyController: ActorsEpoxyController,
-    val reviewsEpoxyController: ReviewsEpoxyController,
-    val imagesEpoxyController: ImagesEpoxyController,
-    val episodesEpoxyController: EpisodesEpoxyController,
+    val actorsListConfig: ActorsListConfig,
+    val reviewsListConfig: ReviewsListConfig,
+    val imagesListConfig: ImagesListConfig,
+    val episodeListConfig: EpisodeListConfig,
 ) : EpoxyController() {
 
     var model: MovieDetailsUI? = null
@@ -28,87 +35,59 @@ internal class DetailsEpoxyController @Inject constructor(
             requestModelBuild()
         }
 
-    var actorsLoadingState: LoadState = LoadState.Loading
-        set(value) {
-            field = value; requestModelBuild()
-        }
-
-    var reviewsLoadingState: LoadState = LoadState.Loading
-        set(value) {
-            field = value; requestModelBuild()
-        }
-    var imagesLoadingState: LoadState = LoadState.Loading
-        set(value) {
-            field = value; requestModelBuild()
-        }
-    var episodesLoadingState: LoadState = LoadState.Loading
-        set(value) {
-            field = value; requestModelBuild()
-        }
-
+    private val loadStates: MutableMap<AdditionalListConfig, LoadState> = listOf(
+        actorsListConfig, reviewsListConfig, imagesListConfig, episodeListConfig
+    ).associateWith { LoadState.Loading }.toMutableMap()
 
     override fun buildModels() {
         model?.run {
 
             (description?.let {
-                DescriptionEpoxyModel(it)
-            } ?: PlaceholderEpoxyModel("Нет описания"))
-                .id("movie_description")
+                DescriptionEpoxyModel(DescriptionConfig, it)
+            } ?: PlaceholderEpoxyModel(DescriptionConfig))
                 .addTo(this@DetailsEpoxyController)
 
+            addListEpoxyModel(ActorsListEpoxyModel(actorsListConfig), actorsListConfig)
+            addListEpoxyModel(CardsListEpoxyModel(reviewsListConfig), reviewsListConfig)
+            addListEpoxyModel(CardsListEpoxyModel(imagesListConfig), imagesListConfig)
 
-            addListEpoxyModel(
-                model = ActorsListEpoxyModel(actorsEpoxyController),
-                modelId = "actors_list",
-                loadingState = actorsLoadingState,
-                placeholderText = "Нет информации об актерах"
-            )
+            if (isSeries)
+                addListEpoxyModel(CardsListEpoxyModel(episodeListConfig), episodeListConfig)
 
-            addListEpoxyModel(
-                model = CardsListEpoxyModel(reviewsEpoxyController, "Отзывы"),
-                modelId = "reviews_list",
-                loadingState = reviewsLoadingState,
-                placeholderText = "Нет отзывов"
-            )
+        }
+    }
 
-            addListEpoxyModel(
-                model = CardsListEpoxyModel(imagesEpoxyController, "Изображения"),
-                modelId = "images_list",
-                loadingState = imagesLoadingState,
-                placeholderText = "Нет изображений"
-            )
-
-            if (isSeries) {
-                addListEpoxyModel(
-                    model = CardsListEpoxyModel(episodesEpoxyController, "Эпизоды"),
-                    modelId = "episodes_list",
-                    loadingState = episodesLoadingState,
-                    placeholderText = "Нет эпизодов"
-                )
+    suspend fun observeLoadingStates(viewLifecycleScope: LifecycleCoroutineScope) {
+        viewLifecycleScope.launch {
+            loadStates.keys.forEach { listInfo ->
+                launch {
+                    listInfo.controller.loadStateFlow.collect {
+                        loadStates[listInfo] = it.source.refresh
+                        requestModelBuild()
+                    }
+                }
             }
         }
     }
 
     private fun addListEpoxyModel(
         model: EpoxyModel<*>,
-        modelId: String,
-        loadingState: LoadState,
-        placeholderText: String,
+        info: DetailsItemConfig,
     ) {
-        when (loadingState) {
+        val state = loadStates[info] ?: return
+        when (state) {
             is LoadState.NotLoading -> {
                 model
             }
 
             is LoadState.Loading -> {
-                ProgressEpoxyModel()
+                ProgressEpoxyModel(info.id)
             }
 
             else -> {
-                PlaceholderEpoxyModel(placeholderText)
+                PlaceholderEpoxyModel(info)
             }
         }
-            .id(modelId)
             .addTo(this)
     }
 }

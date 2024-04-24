@@ -4,6 +4,11 @@ import android.content.res.Resources
 import android.text.Editable
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 fun EditText.setOnTextChangeListener(block: (Editable?) -> Unit) {
     addTextChangedListener(
@@ -19,3 +24,9 @@ fun Int.dpToPx(): Int {
 
 fun <T> unsafeLazy (initializer: () -> T) : Lazy<T> =
     lazy(LazyThreadSafetyMode.NONE, initializer)
+
+fun <T : Any?> Flow<T>.collectOnLifecycle(lifecycleOwner: LifecycleOwner, action: suspend (T) -> Unit) {
+    lifecycleOwner.lifecycleScope.launch {
+        collectLatest(action)
+    }
+}

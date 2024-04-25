@@ -1,6 +1,7 @@
 package com.myaxa.filters_bottomsheet_impl.ui.epoxy_controllers
 
 import com.airbnb.epoxy.EpoxyController
+import com.myaxa.filters_bottomsheet_impl.di.FiltersBottomSheetFragmentScope
 import com.myaxa.filters_bottomsheet_impl.ui.epoxy_models.ListFilterEpoxyModel
 import com.myaxa.filters_bottomsheet_impl.ui.epoxy_models.RatingFilterEpoxyModel
 import com.myaxa.filters_bottomsheet_impl.ui.epoxy_models.YearFilterEpoxyModel
@@ -10,9 +11,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
-class FiltersEpoxyController @Inject constructor(
+@FiltersBottomSheetFragmentScope
+internal class FiltersEpoxyController @Inject constructor(
     listEpoxyControllerFactory: ListFilterEpoxyController.Factory,
 ) : EpoxyController() {
+
+    private val _filtersFlow = MutableStateFlow<Filters?>(null)
+    val filtersFlow = _filtersFlow.asStateFlow()
 
     private val typesEpoxyController = listEpoxyControllerFactory.create { filter ->
         _filtersFlow.update { it?.copy(types = filter) }
@@ -33,9 +38,6 @@ class FiltersEpoxyController @Inject constructor(
     private val ageRatingsEpoxyController = listEpoxyControllerFactory.create { filter ->
         _filtersFlow.update { it?.copy(ageRatings = filter) }
     }
-
-    private val _filtersFlow = MutableStateFlow<Filters?>(null)
-    val filtersFlow = _filtersFlow.asStateFlow()
 
     fun updateFilters(filters: Filters?) {
         _filtersFlow.tryEmit(filters)

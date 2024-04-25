@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.viewbindingpropertydelegate)
 
     implementation(libs.airbnb.epoxy)
     kapt(libs.airbnb.epoxy)

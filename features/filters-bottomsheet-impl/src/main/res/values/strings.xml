@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="accept_filters_selection">Применить</string>
-    <string name="cancel_filters_selection">Очистить</string>
+    <string name="clear_filters_selection">Очистить</string>
 </resources>

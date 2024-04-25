@@ -9,7 +9,7 @@ import com.myaxa.movie_catalog_impl.filters.Filter
 import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies.common.setOnTextChangeListener
 
-data class YearFilterEpoxyModel(
+internal data class YearFilterEpoxyModel(
     private val model: Filter.YearFilter,
     private val submitCallback: (Filter.YearFilter) -> Unit,
 ) : ViewBindingKotlinModel<ItemFilterYearBinding>(R.layout.item_filter_year) {

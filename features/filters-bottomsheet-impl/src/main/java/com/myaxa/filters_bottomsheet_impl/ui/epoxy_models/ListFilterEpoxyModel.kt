@@ -6,7 +6,7 @@ import com.myaxa.filters_bottomsheet_impl.R
 import com.myaxa.filters_bottomsheet_impl.databinding.ItemFilterListBinding
 import com.myaxa.movies.common.ViewBindingKotlinModel
 
-data class ListFilterEpoxyModel(
+internal data class ListFilterEpoxyModel(
     val titleText: String,
     val controller: EpoxyController,
     val spanCount: Int = 3,

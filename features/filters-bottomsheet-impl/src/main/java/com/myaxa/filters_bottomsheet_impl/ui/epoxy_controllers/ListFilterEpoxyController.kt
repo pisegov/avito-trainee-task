@@ -7,7 +7,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
-class ListFilterEpoxyController @AssistedInject constructor(
+internal class ListFilterEpoxyController @AssistedInject constructor(
     @Assisted(SUBMIT_CALLBACK_TAG) private val submitCallback: (Filter.ListFilter) -> Unit,
 ) : EpoxyController() {
 

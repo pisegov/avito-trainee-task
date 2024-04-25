@@ -5,7 +5,7 @@ import com.myaxa.filters_bottomsheet_impl.databinding.ItemFilterListOptionBindin
 import com.myaxa.movie_catalog_impl.filters.FilterValue
 import com.myaxa.movies.common.ViewBindingKotlinModel
 
-data class ListFilterOptionEpoxyModel(
+internal data class ListFilterOptionEpoxyModel(
     val filterKey: String,
     val filterValue: FilterValue,
     val updateFilter: (String, FilterValue) -> Unit,

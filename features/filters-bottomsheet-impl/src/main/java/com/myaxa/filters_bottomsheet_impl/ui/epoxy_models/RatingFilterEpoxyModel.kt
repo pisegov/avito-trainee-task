@@ -9,7 +9,7 @@ import com.myaxa.movie_catalog_impl.filters.Filter
 import com.myaxa.movies.common.ViewBindingKotlinModel
 import com.myaxa.movies.common.setOnTextChangeListener
 
-data class RatingFilterEpoxyModel(
+internal data class RatingFilterEpoxyModel(
     private val model: Filter.RatingFilter,
     private val submitCallback: (Filter.RatingFilter) -> Unit,
 ) : ViewBindingKotlinModel<ItemFilterRatingBinding>(R.layout.item_filter_rating) {

@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.doOnLayout
 
 @RequiresApi(Build.VERSION_CODES.R)
-fun View.addKeyboardListener(keyboardCallback: (visible: Boolean) -> Unit) {
+internal fun View.addKeyboardListener(keyboardCallback: (visible: Boolean) -> Unit) {
     doOnLayout {
         //get init state of keyboard
         var keyboardVisible = rootWindowInsets?.isVisible(WindowInsets.Type.ime()) == true

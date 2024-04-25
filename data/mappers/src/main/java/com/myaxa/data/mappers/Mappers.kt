@@ -12,7 +12,7 @@ import com.myaxa.movies_api.models.MovieDTO
 import com.myaxa.movie_catalog_impl.Movie
 
 /*
-* Общий маппер для модулей movies-data и movie-details-data
+* Mapper for movie entities of movies-data and movie-details-data modules
 * */
 fun MovieDTO.toMovieFullDBO(): MovieFullDBO {
 
@@ -23,7 +23,7 @@ fun MovieDTO.toMovieFullDBO(): MovieFullDBO {
         description = description,
         rating = rating?.kp,
         poster = poster?.previewUrl,
-        backdrop = backdrop?.previewUrl,
+        backdrop = backdrop?.url,
         isSeries = isSeries,
         typeId = 0,
         ageRatingId = null,

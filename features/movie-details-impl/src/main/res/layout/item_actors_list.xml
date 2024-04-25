@@ -24,6 +24,7 @@
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/list"
             android:padding="8dp"
+            android:nestedScrollingEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemSpacing="8dp" />

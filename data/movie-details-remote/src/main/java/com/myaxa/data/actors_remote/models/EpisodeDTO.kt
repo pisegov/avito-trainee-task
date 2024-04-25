@@ -28,8 +28,8 @@ data class SeasonDTO(
 data class EpisodeDTO(
     @SerialName("number") val number: Int,
     @SerialName("name") val title: String,
-    @SerialName("still") val photo: Poster?,
-    @SerialName("airDate") @Serializable(with = DateSerializer::class) val date: Instant?,
+    @SerialName("still") val photo: Poster? = null,
+    @SerialName("airDate") @Serializable(with = DateSerializer::class) val date: Instant? = null,
 ) {
     fun toDomainModel(seasonNumber: Int): Episode {
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")

@@ -10,11 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MoviesDao {
 
-    @Query("select * from movies")
-    fun getAll(): List<MovieDBO>
+    @Query("select * from movies where movie_id in (:ids) limit :offset, :rowCount")
+    fun getMovieListByIds(ids: List<Long>, offset: Int, rowCount: Int): List<MovieFullDBO>
 
     @Query("select * from movies where movie_id like :id")
     fun getMovieById(id: Long): Flow<MovieFullDBO?>
+
+    @Query("select count(*) from movies")
+    fun getMoviesCount(): Int
 
     @Upsert
     suspend fun insertMovie(movieDBO: MovieDBO)

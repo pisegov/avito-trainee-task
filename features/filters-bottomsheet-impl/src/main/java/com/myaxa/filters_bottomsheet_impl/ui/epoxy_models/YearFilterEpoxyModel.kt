@@ -24,7 +24,7 @@ internal data class YearFilterEpoxyModel(
 
         setupInputField(
             et = fromTextField.editText,
-            text = model.from,
+            text = model.from?.toString(),
             hint = LOWER_BOUND.toString(),
             imeActionId = EditorInfo.IME_ACTION_NEXT,
         ) {
@@ -33,7 +33,7 @@ internal data class YearFilterEpoxyModel(
 
         setupInputField(
             et = toTextField.editText,
-            text = model.to,
+            text = model.to?.toString(),
             hint = UPPER_BOUND.toString(),
             imeActionId = EditorInfo.IME_ACTION_DONE,
         ) {
@@ -95,8 +95,8 @@ internal data class YearFilterEpoxyModel(
             val newTo = toStr.takeIf { it.isNotEmpty() }
             submitCallback(
                 model.copy(
-                    from = newFrom,
-                    to = newTo
+                    from = newFrom?.toInt(),
+                    to = newTo?.toInt()
                 )
             )
             return

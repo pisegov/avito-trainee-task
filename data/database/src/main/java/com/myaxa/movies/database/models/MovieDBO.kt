@@ -38,9 +38,9 @@ data class MovieDBO(
     @ColumnInfo("is_series") val isSeries: Boolean,
     @ColumnInfo("rating") val rating: Double? = null,
 
-    @ColumnInfo("type_id") val typeId: Long,
-    @ColumnInfo("age_rating_id") val ageRatingId: Long?,
-    @ColumnInfo("network_id") val networkId: Long?,
+    @ColumnInfo("type_id") val typeId: Long = 0,
+    @ColumnInfo("age_rating_id") val ageRatingId: Long? = null,
+    @ColumnInfo("network_id") val networkId: Long? = null,
 )
 
 data class MovieFullDBO(

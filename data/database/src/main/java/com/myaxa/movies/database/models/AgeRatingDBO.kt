@@ -12,4 +12,5 @@ import androidx.room.PrimaryKey
 data class AgeRatingDBO(
     @ColumnInfo("age_rating_id") @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     @ColumnInfo("title") val title: String,
+    @ColumnInfo("value") val value: String,
 )

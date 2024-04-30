@@ -8,8 +8,8 @@ sealed interface Filter {
 
     data class YearFilter(
         override val title: String = "Год выхода",
-        val from: String? = null,
-        val to: String? = null,
+        val from: Int? = null,
+        val to: Int? = null,
     ) : Filter {
         override val isSelected: Boolean
             get() = from != null || to != null
@@ -36,7 +36,7 @@ sealed interface Filter {
 
     data class RatingFilter(
         override val title: String = "Рейтинг на Кинопоиске",
-        val from: String? = null,
+        val from: Double? = null,
     ) : Filter {
         override val isSelected: Boolean
             get() = from != null
@@ -62,8 +62,9 @@ sealed interface Filter {
             return copy(options = newOptions)
         }
 
-        fun selectedOptions(): List<String> {
-            return options.entries.filter { it.value.isSelected }.map { it.key }
+        fun selectedOptions(): List<String>? {
+            val list = options.entries.filter { it.value.isSelected }.map { it.key }
+            return list.takeIf { list.isNotEmpty() }
         }
     }
 }

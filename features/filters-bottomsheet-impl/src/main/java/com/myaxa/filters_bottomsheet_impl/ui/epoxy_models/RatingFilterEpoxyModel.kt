@@ -26,10 +26,9 @@ internal data class RatingFilterEpoxyModel(
 
             this?.text?.clear()
             model.from?.let {
-                this?.setText(it)
-                this?.setSelection(it.length)
+                this?.setText(it.toString())
+                this?.setSelection(it.toString().length)
             }
-
 
             this?.setOnTextChangeListener {
                 limitInput(it, this)
@@ -74,7 +73,7 @@ internal data class RatingFilterEpoxyModel(
                 throw NumberFormatException()
             }
 
-            submitCallback(model.copy(from = value.toString()))
+            submitCallback(model.copy(from = value))
 
             true
         } catch (e: NumberFormatException) {

@@ -11,6 +11,7 @@ import com.myaxa.movies.database.MoviesDatabaseModule
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
 import com.myaxa.movie_catalog_impl.MoviesRepository
+import com.myaxa.movies.database.datasources.MovieDetailsInfoLocalDataSource
 import com.myaxa.movies_data.MoviesRepositoryImpl
 import com.myaxa.network.RetrofitModule
 import dagger.Binds
@@ -50,6 +51,11 @@ internal interface ApplicationModule {
         @Provides
         fun provideMovieDetailsInfoRemoteDataSource(retrofitModule: RetrofitModule): MovieDetailsInfoDataSource {
             return MovieDetailsInfoDataSource(retrofitModule)
+        }
+
+        @Provides
+        fun provideMovieDetailsInfoLocalDataSource(databaseModule: MoviesDatabaseModule): MovieDetailsInfoLocalDataSource {
+            return MovieDetailsInfoLocalDataSource(databaseModule)
         }
 
         @Provides

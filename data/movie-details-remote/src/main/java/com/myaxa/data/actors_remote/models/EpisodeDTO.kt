@@ -20,7 +20,7 @@ data class SeasonDTO(
         Season(
             movieId = movieId,
             number = number,
-            episodes = episodes.map { it.toDomainModel(number) }
+            episodes = episodes.map { it.toDomainModel(movieId, number) }
         )
 }
 
@@ -31,11 +31,12 @@ data class EpisodeDTO(
     @SerialName("still") val photo: Poster? = null,
     @SerialName("airDate") @Serializable(with = DateSerializer::class) val date: Instant? = null,
 ) {
-    fun toDomainModel(seasonNumber: Int): Episode {
+    internal fun toDomainModel(movieId: Long, seasonNumber: Int): Episode {
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
             .withZone(ZoneId.systemDefault())
 
         return Episode(
+            movieId = movieId,
             seasonNumber = seasonNumber,
             episodeNumber = number,
             title = title,

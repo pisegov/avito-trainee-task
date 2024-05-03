@@ -7,6 +7,7 @@ import com.myaxa.data.mappers.toMovieFullDBO
 import com.myaxa.domain.movie_details.DetailsInfoModel
 import com.myaxa.domain.movie_details.MovieDetails
 import com.myaxa.domain.movie_details.MovieDetailsRepository
+import com.myaxa.movies.database.datasources.MovieDetailsInfoLocalDataSource
 import com.myaxa.movies.database.datasources.MoviesLocalDataSource
 import com.myaxa.movies_api.MoviesRemoteDataSource
 import jakarta.inject.Inject
@@ -16,17 +17,18 @@ import kotlinx.coroutines.flow.map
 class MovieDetailsRepositoryImpl @Inject internal constructor(
     private val moviesRemoteDataSource: MoviesRemoteDataSource,
     private val detailsRemoteDataSource: MovieDetailsInfoDataSource,
-    private val localDataSource: MoviesLocalDataSource,
+    private val moviesLocalDataSource: MoviesLocalDataSource,
+    private val detailsLocalDataSource: MovieDetailsInfoLocalDataSource,
 ) : MovieDetailsRepository {
 
     override fun getMovieDetailsFlow(id: Long): Flow<MovieDetails?> {
-        return localDataSource.getMovie(id).map {
+        return moviesLocalDataSource.getMovie(id).map {
             it?.toMovieDetails()
         }
     }
 
     override fun <T : DetailsInfoModel> getInfo(movieId: Long, type: Class<T>): PagingSource<Int, T> {
-        return MovieDetailsInfoPagingSource(movieId, type, detailsRemoteDataSource)
+        return MovieDetailsInfoPagingSource(movieId, type, detailsRemoteDataSource, detailsLocalDataSource)
     }
 
     override suspend fun loadMovieDetails(id: Long) {
@@ -34,7 +36,7 @@ class MovieDetailsRepositoryImpl @Inject internal constructor(
         when {
             result.isSuccess -> {
                 val movie = result.getOrThrow()
-                localDataSource.insertMovie(movie.toMovieFullDBO())
+                moviesLocalDataSource.insertMovie(movie.toMovieFullDBO())
             }
         }
     }

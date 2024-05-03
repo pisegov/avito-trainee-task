@@ -38,6 +38,7 @@ data class Season(
 ) : DetailsInfoModel
 
 data class Episode(
+    val movieId: Long,
     val seasonNumber: Int,
     val episodeNumber: Int,
     val title: String,

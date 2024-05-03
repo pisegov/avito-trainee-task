@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.myaxa.domain.movie_details.Episode
 
 @Entity(
     tableName = "episodes",
@@ -22,5 +23,27 @@ data class EpisodeDBO(
     @ColumnInfo("episode_number") val episodeNumber: Int,
     @ColumnInfo("date") val date: String,
     @ColumnInfo("title") val title: String,
-    @ColumnInfo("photo") val photo: String,
-)
+    @ColumnInfo("photo") val photo: String? = null,
+) : MovieDetailsInfoDBO {
+    companion object : MovieDetailsInfoDBOCreator<Episode, EpisodeDBO> {
+        override fun fromDomainModel(domainModel: Episode): EpisodeDBO = with(domainModel) {
+            EpisodeDBO(
+                movieId = movieId,
+                seasonNumber = seasonNumber,
+                episodeNumber = episodeNumber,
+                date = date,
+                title = title,
+                photo = image,
+            )
+        }
+    }
+
+    override fun toDomainModel() = Episode(
+        movieId = movieId,
+        seasonNumber = seasonNumber,
+        episodeNumber = episodeNumber,
+        date = date,
+        title = title,
+        image = photo,
+    )
+}

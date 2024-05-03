@@ -35,4 +35,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
+
+    implementation(project(":domain:movie-details"))
 }
